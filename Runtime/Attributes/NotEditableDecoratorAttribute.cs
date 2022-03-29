@@ -6,7 +6,8 @@ using UnityEngine;
 namespace CippSharp.Core.Attributes
 {
     /// <summary>
-    /// A decorator draws only the first 
+    /// Disable GUI on first Line of current property
+    /// (useful if the serialized property is single line height)
     /// </summary>
     public class NotEditableDecoratorAttribute : ANotEditableAttribute
     {

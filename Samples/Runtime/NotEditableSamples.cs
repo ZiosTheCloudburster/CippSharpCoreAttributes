@@ -6,10 +6,18 @@ namespace CippSharp.Core.Attributes.Samples
     public class NotEditableSamples : MonoBehaviour
     {
         [Serializable]
+        public struct Nested1
+        {
+            public byte biteMe;
+            public bool seriously;
+        }
+        
+        [Serializable]
         public struct CustomData
         {
             public float value0;
             public float value1;
+            public Nested1 nestOre;
         }
         
         public string tooltip0 = "Not Editable Attribute.";
@@ -27,6 +35,7 @@ namespace CippSharp.Core.Attributes.Samples
         public string tooltip3 = "Decorator affect only single line.";
         [NotEditableDecorator]
         public CustomData withNotEditableDecorator = new CustomData();
-        
+        [Space(6)]
+        public Nested1 unNested = new Nested1();
     }
 }

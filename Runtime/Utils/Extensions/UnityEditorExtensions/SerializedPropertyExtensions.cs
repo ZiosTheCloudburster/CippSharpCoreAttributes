@@ -20,8 +20,13 @@ namespace CippSharpEditor.Core
 	    {
 		    return SerializedPropertyUtils.GetAllProperties(serializedObject);
 	    }
-	    
-		/// <summary>
+
+	    public static IEnumerable<SerializedProperty> GetChildren(this SerializedProperty property)
+	    {
+		    return SerializedPropertyUtils.GetChildren(property);
+	    }
+
+	    /// <summary>
 		/// Retrieve a brother property of the interested one.
 		/// </summary>
 		/// <param name="property"></param>

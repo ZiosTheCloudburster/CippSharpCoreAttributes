@@ -1,14 +1,13 @@
-﻿
-using CippSharp.Core.Attributes;
+﻿#if UNITY_EDITOR
 using UnityEngine;
-
-#if UNITY_EDITOR
-using CippSharp.Core;
 using UnityEditor;
 #endif
 
-namespace CippSharp.Core
+namespace CippSharp.Core.Attributes
 {
+    /// <summary>
+    /// Disable GUI during runtime or hide the property during runtime
+    /// </summary>
     public class NotEditableInPlayAttribute : ANotEditableAttribute
     {
         public ShowMode type { get; protected set; } = ShowMode.ReadOnly;
@@ -17,72 +16,60 @@ namespace CippSharp.Core
         {
             
         }
-
+        
         public NotEditableInPlayAttribute(ShowMode type) : this ()
         {
             this.type = type;
         }
 
+        #region Custom Editor
 #if UNITY_EDITOR
-        
-#endif
-
-
-    }
-}
-
-#if UNITY_EDITOR
-namespace CippSharpEditor.Core
-{
-    [CustomPropertyDrawer(typeof(NotEditableInPlayAttribute))]
-    public class NotEditableInPlayDrawer : PropertyDrawer
-    {
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        [CustomPropertyDrawer(typeof(NotEditableInPlayAttribute))]
+        public class NotEditableInPlayDrawer : PropertyDrawer
         {
-            if (attribute is NotEditableInPlayAttribute notEditableInPlayAttribute)
+            public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
             {
-                if (Application.isPlaying && notEditableInPlayAttribute.type == ANotEditableAttribute.ShowMode.HideInInspector)
+                if (attribute is NotEditableInPlayAttribute notEditableInPlayAttribute)
                 {
-                    return 0.0f;
+                    bool isPlaying = Application.isPlaying;
+                    if (isPlaying && notEditableInPlayAttribute.type == ShowMode.HideInInspector)
+                    {
+                        return 0.0f;
+                    }
                 }
-            }
             
-            return EditorGUIUtils.GetPropertyHeight(property, label);
-        }
+                return EditorGUIUtils.GetPropertyHeight(property, label);
+            }
 
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            if (attribute is NotEditableInPlayAttribute notEditableInPlayAttribute)
+            public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
             {
-                switch (notEditableInPlayAttribute.type)
+                bool isPlaying = Application.isPlaying;
+                if (attribute is NotEditableInPlayAttribute notEditableInPlayAttribute)
                 {
-                    case ANotEditableAttribute.ShowMode.HideInInspector:
-                        if (!Application.isPlaying)
-                        {
-                            EditorGUIUtils.DrawProperty(position, property, label);
-                        } 
-                        break;
-                    case ANotEditableAttribute.ShowMode.ReadOnly:
-                        if (!Application.isPlaying)
-                        {
-                            EditorGUIUtils.DrawProperty(position, property, label);
-                        }
-                        else
-                        {
-                            EditorGUIUtils.DrawNotEditableProperty(position, property, label);
-                        }
-                        break;
+                    switch (notEditableInPlayAttribute.type)
+                    {
+                        case ShowMode.HideInInspector:
+                            if (!isPlaying)
+                            {
+                                EditorGUIUtils.DrawProperty(position, property, label);
+                            } 
+                            break;
+                        case ShowMode.ReadOnly:
+                            if (!isPlaying)
+                            {
+                                EditorGUIUtils.DrawProperty(position, property, label);
+                            }
+                            else
+                            {
+                                EditorGUIUtils.DrawNotEditableProperty(position, property, label);
+                            }
+                            break;
+                    }
                 }
             }
-            else
-            {
-                if (!Application.isPlaying)
-                {
-                    EditorGUIUtils.DrawProperty(position, property, label);
-                } 
-            }
-        }
 
+        }
+#endif
+        #endregion
     }
 }
-#endif
