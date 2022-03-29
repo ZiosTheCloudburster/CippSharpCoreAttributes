@@ -13,6 +13,9 @@ namespace CippSharp.Core.Attributes
 {
     public class ShowIfAttribute : ANotEditableAttribute
     {
+        /// <summary>
+        /// The field, the property, the   
+        /// </summary>
         public string Condition { get; protected set; } = string.Empty;
         public bool ConditionMatch { get; protected set; } = true;
         public ShowMode HideMode { get; protected set; } = ShowMode.HideInInspector;
