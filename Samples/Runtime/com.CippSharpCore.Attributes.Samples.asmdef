@@ -1,0 +1,15 @@
+{
+    "name": "com.CippSharpCore.Attributes.Samples",
+    "references": [
+        "GUID:1cb3047acc3b11341bb674e9b24024a5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
