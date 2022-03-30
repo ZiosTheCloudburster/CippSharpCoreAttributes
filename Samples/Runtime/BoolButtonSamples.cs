@@ -1,11 +1,55 @@
 ﻿#if UNITY_EDITOR
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CippSharp.Core.Attributes.Samples
 {
+#pragma warning disable 649
 #pragma warning disable 414
-    public class BoolButtonSamples : MonoBehaviour
+    internal class BoolButtonSamples : MonoBehaviour
     {
+        [Serializable]
+        public struct CustomData
+        {
+            public int prankingYouCount;
+            [BoolButtonCallback(nameof(PrintAndIncreasePranksCount))]
+            public bool printImPrankingYou;
+            [BoolButtonCallback(nameof(ClearPrankingCount))]
+            public bool clearPrankingCount;
+            
+            private void PrintAndIncreasePranksCount()
+            {
+                prankingYouCount++;
+                Debug.Log("I'm pranking you.");
+            }
+
+            private void ClearPrankingCount()
+            {
+                prankingYouCount = 0;
+            }
+        }
+        
+        #region Inheritance 
+        
+        [Serializable]
+        public class NestData0
+        {
+            protected virtual void PrintSomething()
+            {
+                Debug.Log("Something");
+            }
+        }
+        
+        [Serializable]
+        public class NestData1 : NestData0
+        {
+            [BoolButtonCallback(nameof(PrintSomething))]
+            public bool printSomething = false;
+        }
+        
+        #endregion
+        
         [TextArea(1, 3)]
         public string tooltip0 = "Example of BoolButtonCallback (minibutton) with press behaviour, and displayed boolean value.";
         
@@ -25,9 +69,34 @@ namespace CippSharp.Core.Attributes.Samples
         public void SetThisGameObjectActive(bool value)
         {
             gameObject.SetActive(value);
+            Debug.Log($"Toggle gameObject active status to: {value}");
         }
         
+        
+        [Space(6)]
+        public string tooltip2 = "Example of Nested Types with BoolButtonCallback.";
+        public CustomData customData0 = new CustomData();
+        public NestData1 nestData1 = new NestData1();
+        
+        [Space(6)]
+        public string tooltip3 = "Example of ButtonDecorator";
+        [ButtonDecorator("-", nameof(DecreaseUselessCount))]
+        [ButtonDecorator("+", nameof(IncreaseUselessCount))]
+        public int uselessCount = 0;
+
+        private void IncreaseUselessCount()
+        {
+            uselessCount++;
+        }
+
+        private void DecreaseUselessCount()
+        {
+            uselessCount--;
+        }
+
+
     }
 #pragma warning restore 414
+#pragma warning restore 649
 }
 #endif

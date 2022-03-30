@@ -1,4 +1,5 @@
-﻿#if UNITY_EDITOR
+﻿using System;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 #endif
@@ -9,6 +10,7 @@ namespace CippSharp.Core.Attributes
     /// Disable GUI on first Line of current property
     /// (useful if the serialized property is single line height)
     /// </summary>
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
     public class NotEditableDecoratorAttribute : ANotEditableAttribute
     {
 #if UNITY_EDITOR

@@ -80,23 +80,25 @@ namespace CippSharp.Core.Attributes
                         bool propertyBooleanValue = property.boolValue;
                         switch (mode)
                         {
+                            //Press means that is true just for the GUI frame when it's clicked.
                             case Behaviour.Press:
                                 EditorGUIUtils.DrawButtonWithCallback(position, propertyName,
                                     () => { property.boolValue = true; }, () => { property.boolValue = false; }, style);
                                 break;
+                            //Toggle means that is true or false like a normal boolean.
                             case Behaviour.Toggle:
                                 EditorGUIUtils.DrawButtonWithCallback(position, propertyName,
-                                    () => { property.boolValue = !property.boolValue; }, style);
+                                    () => { property.boolValue = !propertyBooleanValue; }, () => { property.boolValue = propertyBooleanValue; }, style);
                                 break;
                             default:
                                 EditorGUI.LabelField(position, label.text, "Argument out of range exception.");
                                 break;
                         }
 
-                        if (propertyBooleanValue != property.boolValue)
-                        {
-                            //Debug.Log($"Property {property.displayName} has changed.");
-                        }
+//                        if (propertyBooleanValue != property.boolValue)
+//                        {
+//                            //Debug.Log($"Property {property.displayName} has changed.");
+//                        }
                     }
 
                     if (EditorGUI.EndChangeCheck())
@@ -105,13 +107,17 @@ namespace CippSharp.Core.Attributes
 
                         if (abstractButtonAttribute != null && abstractButtonAttribute.UseCallback)
                         {
+                            //apply this edited property
+                            property.serializedObject.ApplyModifiedProperties();
+                            
+                            //update again
                             property.serializedObject.Update();
-
+                            //invoke the callback
                             if (SerializedPropertyUtils.TryEditLastParentLevel(property, (ref object o) => Callback(ref o, abstractButtonAttribute.MethodCallback, property.boolValue)))
                             {
 
                             }
-
+                            //then apply again if something was edited during the callback
                             property.serializedObject.ApplyModifiedProperties();
                         }
 
