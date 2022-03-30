@@ -73,7 +73,7 @@ namespace CippSharp.Core
             return allObjects.ToArray();
         }
 
-//	    #region We really need these?
+        //	    #region We really need these?
 //	    
 //	    /// <summary>
 //		/// Add a component to serialized object's targets. 

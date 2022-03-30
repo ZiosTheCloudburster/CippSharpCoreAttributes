@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace CippSharp.Core.Attributes
 {
@@ -20,9 +24,11 @@ namespace CippSharp.Core.Attributes
         [CustomPropertyDrawer(typeof(ButtonDecoratorAttribute), true)]
         public class ButtonDecoratorAttributeDrawer : DecoratorDrawer
         {
+//            readonly List<Object> potentialTargets = new List<Object>();
+            
             public override float GetHeight()
             {
-                return base.GetHeight();
+                return EditorGUIUtils.LineHeight;
             }
 
             public override void OnGUI(Rect position)
@@ -36,23 +42,37 @@ namespace CippSharp.Core.Attributes
                     {
                         style = EditorStyles.miniButton;
                     }
-                    bool buttonClicked = Event.current.rawType == EventType.MouseDown && rect.Contains(Event.current.mousePosition);
-                    if (buttonClicked)
-                    {
-                        Debug.Log("Button Clicked 0");
-                    }
-                    EditorGUIUtils.DrawButtonWithCallback(rect, buttonDecoratorAttribute.DisplayName, () => ClickCallback(rect), style);
+//                    bool buttonClicked = Event.current.rawType == EventType.MouseDown && rect.Contains(Event.current.mousePosition);
+//                    if (buttonClicked)
+//                    {
+//                        
+//                    }
+                    EditorGUIUtils.DrawButtonWithCallback(rect, buttonDecoratorAttribute.DisplayName, () => ClickCallback(buttonDecoratorAttribute.Callback), style);
                 }
+                
                 base.OnGUI(position);
             }
 
-            private void ClickCallback(Rect rect)
+            private void ClickCallback(string callback)
             {
-                bool buttonClicked = Event.current.rawType == EventType.MouseDown && rect.Contains(Event.current.mousePosition);
-                if (buttonClicked)
+//                potentialTargets.Clear();
+              
+                Editor[] editors = ActiveEditorTracker.sharedTracker.activeEditors;
+                IEnumerable<Object> allTargets = editors.SelectMany(e => SerializedObjectUtils.GetTargetObjects(e.serializedObject));
+               
+                //TODO: this filters only behaviours and not scriptables or properties
+                foreach (Object o in allTargets)
                 {
-                    Debug.Log("Button Clicked 1");
+                    object obj = o;
+                    if (ReflectionUtils.HasMember(o, callback, out MemberInfo member))
+                    {
+                        //TODO: Relative serializedObject update
+                        ReflectionUtils.TryCallMethod(o, callback, out _, null);
+                        //TODO: Relative serializedObject apply
+                    }
                 }
+                
+                Debug.Log($"Button Clicked.");
             }
         }
 #endif
