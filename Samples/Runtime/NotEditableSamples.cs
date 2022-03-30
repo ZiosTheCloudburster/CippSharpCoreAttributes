@@ -37,5 +37,9 @@ namespace CippSharp.Core.Attributes.Samples
         public CustomData withNotEditableDecorator = new CustomData();
         [Space(6)]
         public Nested1 unNested = new Nested1();
+
+        public bool showValue4 = false;
+        [ShowIf(nameof(showValue4))] 
+        public float value4 = 4.2f;
     }
 }
