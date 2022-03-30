@@ -9,7 +9,7 @@ namespace CippSharp.Core.Attributes
         public enum ShowMode : sbyte
         {
             HideInInspector,
-            ReadOnly
+            ReadOnly,
         }
     }
 }

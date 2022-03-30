@@ -2,7 +2,7 @@
  *  Author: Alessandro Salani (Cippman)
  */
 
-namespace CippSharp.Core
+namespace CippSharp.Core.Attributes
 {
     /// <summary>
     /// Display a bool as a button in inspector.

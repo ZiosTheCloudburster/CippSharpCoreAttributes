@@ -1,12 +1,14 @@
-﻿using UnityEngine;
-
-namespace CippSharp.Core
+﻿
+namespace CippSharp.Core.Attributes
 {
+    /// <summary>
+    /// Display a bool as a button in inspector that works as a toggle
+    /// </summary>
     public class BoolButtonToggleAttribute : BoolButtonAttribute
     {
         public BoolButtonToggleAttribute()
         {
-            this.AttributeBehaviour = BoolButtonBehaviour.Toggle;
+            this.Mode = Behaviour.Toggle;
             this.ShowValue = true;
         }
         

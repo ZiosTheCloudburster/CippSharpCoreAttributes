@@ -1,9 +1,11 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using UnityEngine;
 
 namespace CippSharp.Core.Attributes.Samples
 {
-    public class NotEditableSamples : MonoBehaviour
+#pragma warning disable 649
+    internal class NotEditableSamples : MonoBehaviour
     {
         [Serializable]
         public struct Nested1
@@ -18,6 +20,23 @@ namespace CippSharp.Core.Attributes.Samples
             public float value0;
             public float value1;
             public Nested1 nestOre;
+        }
+        
+        [Serializable]
+        public struct CustomData1
+        {
+            public bool editValue0;
+            
+            [ShowIf(nameof(CanShowValue), true, ANotEditableAttribute.ShowMode.ReadOnly)]
+            public int value0;
+
+            [ShowIf(nameof(CanShowValue), false, ANotEditableAttribute.ShowMode.ReadOnly)]
+            public float value1;
+
+            private bool CanShowValue()
+            {
+                return editValue0;
+            }
         }
         
         public string tooltip0 = "Not Editable Attribute.";
@@ -37,9 +56,13 @@ namespace CippSharp.Core.Attributes.Samples
         public CustomData withNotEditableDecorator = new CustomData();
         [Space(6)]
         public Nested1 unNested = new Nested1();
-
+        public string tooltip4 = "Show if attribute. Check also the code for the sample";
         public bool showValue4 = false;
         [ShowIf(nameof(showValue4))] 
         public float value4 = 4.2f;
+        [Space(6)]
+        public CustomData1 customData1 = new CustomData1();
     }
+#pragma warning restore 649
 }
+#endif

@@ -1,5 +1,5 @@
 ﻿
-namespace CippSharp.Core
+namespace CippSharp.Core.Attributes
 {
     public enum GUIButtonStyle : sbyte
     {

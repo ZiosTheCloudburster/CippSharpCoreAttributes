@@ -1,0 +1,3 @@
+Attributes by default use FULL property drawers so, MULTIPLE of them are not displaying correctly.
+A property Drawer overrides the other and so on. 
+The attribute order property WORKS only with Decorators, as UNITY clearly says: https://docs.unity3d.com/ScriptReference/PropertyAttribute-order.html

@@ -10,7 +10,10 @@ namespace CippSharp.Core.Attributes
     /// </summary>
     public class NotEditableInPlayAttribute : ANotEditableAttribute
     {
-        public ShowMode type { get; protected set; } = ShowMode.ReadOnly;
+        /// <summary>
+        /// Show mode of the property. It should be not editable or hidden during runtime?
+        /// </summary>
+        private ShowMode Type { get; set; } = ShowMode.ReadOnly;
 
         public NotEditableInPlayAttribute()
         {
@@ -19,7 +22,7 @@ namespace CippSharp.Core.Attributes
         
         public NotEditableInPlayAttribute(ShowMode type) : this ()
         {
-            this.type = type;
+            this.Type = type;
         }
 
         #region Custom Editor
@@ -32,7 +35,7 @@ namespace CippSharp.Core.Attributes
                 if (attribute is NotEditableInPlayAttribute notEditableInPlayAttribute)
                 {
                     bool isPlaying = Application.isPlaying;
-                    if (isPlaying && notEditableInPlayAttribute.type == ShowMode.HideInInspector)
+                    if (isPlaying && notEditableInPlayAttribute.Type == ShowMode.HideInInspector)
                     {
                         return 0.0f;
                     }
@@ -46,7 +49,7 @@ namespace CippSharp.Core.Attributes
                 bool isPlaying = Application.isPlaying;
                 if (attribute is NotEditableInPlayAttribute notEditableInPlayAttribute)
                 {
-                    switch (notEditableInPlayAttribute.type)
+                    switch (notEditableInPlayAttribute.Type)
                     {
                         case ShowMode.HideInInspector:
                             if (!isPlaying)
