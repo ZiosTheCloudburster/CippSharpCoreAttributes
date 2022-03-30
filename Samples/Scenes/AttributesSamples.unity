@@ -335,8 +335,13 @@ MonoBehaviour:
   toggleGameObjectActiveStatus: 1
   tooltip2: Example of Nested Types with BoolButton callback.
   customData0:
-    printImPrankingYou: 0
     prankingYouCount: 1
+    printImPrankingYou: 0
+    clearPrankingCount: 0
+  nestData1:
+    printSomething: 0
+  tooltip3: Example of ButtonDecorator
+  uselessCount: -7
 --- !u!1 &1858031618
 GameObject:
   m_ObjectHideFlags: 0
