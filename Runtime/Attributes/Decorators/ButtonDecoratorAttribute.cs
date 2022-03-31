@@ -68,8 +68,6 @@ namespace CippSharp.Core.Attributes
         [CustomPropertyDrawer(typeof(ButtonDecoratorAttribute), true)]
         public class ButtonDecoratorAttributeDrawer : DecoratorDrawer
         {
-//            readonly List<Object> potentialTargets = new List<Object>();
-            
             public override float GetHeight()
             {
                 if (this.attribute is ButtonDecoratorAttribute buttonDecoratorAttribute)
@@ -104,7 +102,7 @@ namespace CippSharp.Core.Attributes
                         {
                             var r = rects[i];
                             var pair = buttons.ElementAt(i);
-                            EditorGUIUtils.DrawButtonWithCallback(r, pair.Key, () => ClickCallback(pair.Value), style);
+                            EditorGUIUtils.DrawButtonWithCallback(r, pair.Key, () => OnClickCallback(pair.Value), style);
                         }
                     }
                 }
@@ -112,7 +110,7 @@ namespace CippSharp.Core.Attributes
                 base.OnGUI(position);
             }
 
-            private void ClickCallback(string callback)
+            private void OnClickCallback(string callback)
             {
 //                potentialTargets.Clear();
                 Debug.Log($"Clicked {callback} button.");
@@ -123,28 +121,140 @@ namespace CippSharp.Core.Attributes
                     foreach (var o in pair.Value)
                     {
                         SerializedObject serializedObject = new SerializedObject(o);
-                            
-//                        SerializedPropertyUtils.GetAllPropertiesOfType(serializedObject, SerializedPropertyType.Generic);
+                        SerializedProperty[] propertiesWithAttribute = GetPropertiesWithAttribute(serializedObject, callback);
+                        if (ArrayUtils.IsNullOrEmpty(propertiesWithAttribute))
+                        {
+                            continue;
+                        }
+
+                        Undo.RecordObject(o, "Before Click");
+                        serializedObject.Update();
+                        
+                        foreach (var property in propertiesWithAttribute)
+                        {
+                            SerializedPropertyUtils.TryEditLastParentLevel(property, OnLastParentLevel);
+                            void OnLastParentLevel(ref object context)
+                            {
+                                if (ReflectionUtils.TryCallMethod(context, callback, out _, null))
+                                {
+                                    Debug.Log($"Button Clicked on {o.name} at {property.propertyPath}.", o);
+                                }
+                            }
+                        }
+                        
+                        serializedObject.ApplyModifiedProperties();
+
+//                        SerializedPropertyUtils.GetAllPropertiesOfType(serializedObject, SerializedPropertyType.Generic);    
+//                        Type type = ((object)o).GetType();
+//                        MethodInfo[] methods = type.GetMethods(ReflectionUtils.Common).Where(m => m.Name == callback).ToArray();
+//                        FieldInfo[] fields = type.GetFields(ReflectionUtils.Common).Where(AttributePredicate).ToArray();
+//                        bool AttributePredicate(FieldInfo f)
+//                        {
+//                            ButtonDecoratorAttribute[] attributes = f.GetCustomAttributes<ButtonDecoratorAttribute>().ToArray();
+//                            return !ArrayUtils.IsNullOrEmpty(attributes) && attributes.Any(b => b.Pairs.ContainsValue(callback));
+//                            
+//                        }
                     }
                 }
               
-                Debug.Log($"All targets count {allTargets.Count()}.");
-//                TODO: this filters only behaviours and not scriptables or properties
-                int filteredTargets = 0;
-                foreach (Object o in allTargets)
+//                Debug.Log($"All targets count {allTargets.Count()}.");
+////                TODO: this filters only behaviours and not scriptables or properties
+//                int filteredTargets = 0;
+//                foreach (Object o in allTargets)
+//                {
+//                    object obj = o;
+//                    if (ReflectionUtils.HasMember(obj, callback, out MemberInfo member))
+//                    {
+//                        filteredTargets++;
+//                        //TODO: Relative serializedObject update
+//                        ReflectionUtils.TryCallMethod(obj, callback, out _, null);
+//                        //TODO: Relative serializedObject apply
+//                    }
+//                }
+                
+                
+            }
+            
+
+            /// <summary>
+            /// Retrieve all properties with <see cref="ButtonDecoratorAttribute"/>
+            /// with match at least one of the callbacks.
+            /// </summary>
+            /// <param name="serializedObject"></param>
+            /// <param name="callback"></param>
+            /// <returns></returns>
+            private static SerializedProperty[] GetPropertiesWithAttribute(SerializedObject serializedObject, string callback)
+            {
+                List<SerializedProperty> propertiesWithAttribute = new List<SerializedProperty>();
+                SerializedProperty[] allProperties = SerializedPropertyUtils.GetAllProperties(serializedObject);
+                foreach (var property in allProperties)
                 {
-                    object obj = o;
-                    if (ReflectionUtils.HasMember(obj, callback, out MemberInfo member))
+                    if (HasAttribute(property, callback))
                     {
-                        filteredTargets++;
-                        //TODO: Relative serializedObject update
-                        ReflectionUtils.TryCallMethod(obj, callback, out _, null);
-                        //TODO: Relative serializedObject apply
+                        propertiesWithAttribute.Add(property);
+                    }
+
+                    if (property.propertyType == SerializedPropertyType.Generic && (property.isExpanded && property.hasChildren))
+                    {
+                        TrySearchInChildrenRecursive(property, callback, ref propertiesWithAttribute);
                     }
                 }
                 
-                Debug.Log($"Button Clicked on {filteredTargets} targets.");
+                return propertiesWithAttribute.ToArray();
             }
+
+            /// <summary>
+            /// Iterate children properties recursively, but avoid not expanded or properties with no children
+            /// </summary>
+            /// <param name="property"></param>
+            /// <param name="callback"></param>
+            /// <param name="propertiesWithAttribute"></param>
+            private static void TrySearchInChildrenRecursive(SerializedProperty property, string callback, ref List<SerializedProperty> propertiesWithAttribute)
+            {
+                SerializedProperty[] children = SerializedPropertyUtils.GetChildren(property).ToArray();
+                foreach (var childProperty in children)
+                {
+                    if (HasAttribute(childProperty, callback))
+                    {
+                        propertiesWithAttribute.Add(childProperty);
+                    }
+
+                    try
+                    {
+                        if (childProperty.propertyType == SerializedPropertyType.Generic && (childProperty.isExpanded && childProperty.hasChildren))
+                        {
+                            TrySearchInChildrenRecursive(childProperty, callback, ref propertiesWithAttribute);
+                        }
+                    }
+                    catch
+                    {
+                        //IGNORED
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Has Attribute?
+            /// </summary>
+            /// <param name="property"></param>
+            /// <param name="callback"></param>
+            /// <returns></returns>
+            private static bool HasAttribute(SerializedProperty property, string callback)
+            {
+                try
+                {
+                    FieldInfo fieldInfo = MirroredScriptAttributeUtility.GetFieldInfoFromProperty(property, out Type type);
+                    List<PropertyAttribute> attributes = MirroredScriptAttributeUtility.GetPropertyAttributes(fieldInfo);
+                    return !ArrayUtils.IsNullOrEmpty(attributes) && attributes.Any(a => a is ButtonDecoratorAttribute buttonDecoratorAttribute && buttonDecoratorAttribute.Pairs.ContainsValue(callback));
+                }
+                catch
+                {
+                    //Ignored
+                    return false;
+                }
+                
+            }
+
         }
 #endif
     }

@@ -62,6 +62,12 @@ namespace CippSharp.Core.Attributes
             return null;
         }
 
+        /// <summary>
+        /// XLAM
+        /// </summary>
+        /// <param name="property"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static FieldInfo GetFieldInfoFromProperty(SerializedProperty property, out System.Type type)
         {
             Type mType = MirroredType;
@@ -70,8 +76,23 @@ namespace CippSharp.Core.Attributes
                 type = null;
                 return null;
             }
-            
-            
+
+            try
+            {
+                MethodInfo method = mType.GetMethod("GetFieldInfoFromProperty", ReflectionUtils.Common);
+                object[] parameters = new[] {(object) property, (object)(Type)null,};
+                FieldInfo targetField = (FieldInfo)method.Invoke(null, parameters);
+                type = parameters[1] as Type;
+                return targetField;
+            }
+            catch (Exception e)
+            {
+                Debug.Log($"Failed for {e.Message}");
+            }
+
+            type = null;
+            return null;
+
         }
     }
 }

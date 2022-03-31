@@ -50,6 +50,18 @@ namespace CippSharp.Core.Attributes.Samples
         
         #endregion
         
+        [Serializable]
+        public class Madness0
+        {
+            [ButtonDecorator("Print if I'm Crazy", nameof(PrintYes))]
+            public bool ImThatCrazy = false;
+
+            private void PrintYes()
+            {
+                Debug.Log("if i can print this, it's a success!");
+            }
+        }
+        
         [TextArea(1, 3)]
         public string tooltip0 = "Example of BoolButtonCallback (minibutton) with press behaviour, and displayed boolean value.";
         
@@ -94,8 +106,9 @@ namespace CippSharp.Core.Attributes.Samples
         {
             uselessCount--;
         }
-
-
+        
+        //Lets see if it is
+        public Madness0 thisIsMadness = new Madness0();
     }
 #pragma warning restore 414
 #pragma warning restore 649
