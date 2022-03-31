@@ -1,6 +1,7 @@
 ﻿#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CippSharp.Core;
 using UnityEditor;
 using UnityEngine;
@@ -57,6 +58,47 @@ namespace CippSharp.Core
             }
             return properties.ToArray();
         }
+
+        /// <summary>
+        /// It retrieves all serialized properties from <param name="serializedObject"></param> iterator,
+        /// filtered by type.
+        /// </summary>
+        /// <returns></returns>
+        public static SerializedProperty[] GetAllPropertiesOfType(SerializedObject serializedObject, SerializedPropertyType type)
+        {
+            return GetAllProperties(serializedObject).Where(p => p.propertyType == type).ToArray();
+        }
+
+        public static SerializedProperty[] GetPotentialContainersOfCallback(SerializedObject serializedObject, string callback)
+        {
+            SerializedProperty[] genericProperties = GetAllPropertiesOfType(serializedObject, SerializedPropertyType.Generic).ToArray();
+            List<SerializedProperty> referencesWithCallback = new List<SerializedProperty>();
+            GetPotentialContainersOfCallbackRecursive(genericProperties, ref referencesWithCallback, callback);
+            return referencesWithCallback.ToArray();
+        }
+
+        private static void GetPotentialContainersOfCallbackRecursive(SerializedProperty[] candidates, ref List<SerializedProperty> storage, string callback)
+        {
+            for (int i = 0; i < candidates.Length; i++)
+            {
+                SerializedProperty property = candidates[i];
+                if (!property.isExpanded)
+                {
+                    continue;
+                }
+                if (!property.hasChildren)
+                {
+                    continue;
+                }
+                
+                
+                var genericChildren = GetChildren(property);
+            }
+        }
+       
+        
+        
+        
         
         /// <summary>
         /// Retrieve a serialized property that is an array as an array of serialized properties.

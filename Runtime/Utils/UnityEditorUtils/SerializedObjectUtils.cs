@@ -28,14 +28,24 @@ namespace CippSharp.Core
 	    {
 		    return SerializedPropertyUtils.GetAllProperties(serializedObject);
 	    }
+        
 
-	    /// <summary>
+        /// <summary>
+        /// Retrieve all targets objects from a <see cref="Editor"/>
+        /// </summary>
+        /// <param name="editor"></param>
+        /// <returns></returns>
+        public static Object[] GetTargetObjects(Editor editor)
+        {
+            return GetTargetObjects(editor.serializedObject);
+        }
+
+        /// <summary>
         /// Retrieve all targets objects from a <see cref="SerializedObject"/>
         /// </summary>
         /// <param name="serializedObject"></param>
-        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static Object[] GetTargetObjects<T>(T serializedObject) where T : SerializedObject
+        public static Object[] GetTargetObjects(SerializedObject serializedObject)
         {
             if (serializedObject == null)
             {
@@ -71,6 +81,23 @@ namespace CippSharp.Core
             }
 
             return allObjects.ToArray();
+        }
+
+        /// <summary>
+        /// Get Pairs between editor and edited objects
+        /// </summary>
+        /// <returns></returns>
+        public static KeyValuePair<Editor, Object[]>[] GetActiveEditorTargetsObjectsPairs()
+        {
+            Editor[] editors = ActiveEditorTracker.sharedTracker.activeEditors;
+            KeyValuePair<Editor, Object[]>[] pairs = new KeyValuePair<Editor, Object[]>[editors.Length];
+            for (int i = 0; i < editors.Length; i++)
+            {
+                Editor editor = editors[i];
+                Object[] editorTargets = GetTargetObjects(editor);
+                pairs[i] = new KeyValuePair<Editor, Object[]>(editor, editorTargets);
+            }
+            return pairs;
         }
 
         //	    #region We really need these?
