@@ -133,12 +133,13 @@ namespace CippSharp.Core.Attributes
                         
                         foreach (var property in propertiesWithAttribute)
                         {
+                            Debug.Log($"Checking {property.propertyPath} on {o.name}.", o);
                             SerializedPropertyUtils.TryEditLastParentLevel(property, OnLastParentLevel);
                             void OnLastParentLevel(ref object context)
                             {
                                 if (ReflectionUtils.TryCallMethod(context, callback, out _, null))
                                 {
-                                    Debug.Log($"Button Clicked on {o.name} at {property.propertyPath}.", o);
+//                                    Debug.Log($"Button Clicked on {o.name} at {property.propertyPath}.", o);
                                 }
                             }
                         }
@@ -228,14 +229,14 @@ namespace CippSharp.Core.Attributes
                 SerializedPropertyUtils.IterateAllChildren(property, OnIterate);
                 void OnIterate(SerializedProperty childProperty)
                 {
-                    Debug.Log($"iterating: {childProperty.name}, {childProperty.propertyPath}");
                     if (HasAttribute(childProperty, callback))
                     {
-                        Debug.Log($"Child {childProperty.propertyPath} has attribute.");
-                        cashbox.Add(childProperty);
+                        //You MUST use child property.Copy() to save the iteration in current state.
+                        cashbox.Add(childProperty.Copy());
                     }
                 }
                 propertiesWithAttribute.AddRange(cashbox);
+//                Debug.Log($"Adding: {nameof(cashbox)}.{cashbox.Count} to {nameof(propertiesWithAttribute)}.{propertiesWithAttribute.Count}");
 //                Debug.Log($"Found {children.Length} children of property {property.propertyPath}.", property.serializedObject.targetObject);
 //                foreach (var childProperty in children)
 //                {
