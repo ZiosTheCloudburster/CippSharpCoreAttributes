@@ -121,6 +121,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &25002401
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 25002402}
+  - component: {fileID: 25002403}
+  m_Layer: 0
+  m_Name: ClampValueSamples
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &25002402
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25002401}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -17.913391, y: 42.09732, z: 31.815897}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &25002403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25002401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450abfb32980a8a44ac7681cc710fb4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltip0: Clamp min & max value drawers samples.
+  minValueClampedAt0: 0
+  maxValueClampedAt2dot43: 2.43
+  between0And1: 0.71
 --- !u!1 &627598817
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,6 +391,9 @@ MonoBehaviour:
   uselessCount: 1
   thisIsMadness:
     ImThatCrazy: 0
+    nestData1:
+      printSomething: 0
+  works: 0
 --- !u!1 &1858031618
 GameObject:
   m_ObjectHideFlags: 0

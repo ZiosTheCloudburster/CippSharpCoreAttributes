@@ -1,0 +1,7 @@
+Attributes by default use FULL property drawers so, MULTIPLE of them are not displaying correctly.
+A property Drawer overrides the other and so on. 
+The attribute order property WORKS only with Decorators, as UNITY clearly says: https://docs.unity3d.com/ScriptReference/PropertyAttribute-order.html
+
+Some decorators are 'experimental' and they 'target' however the property context / reference because they're intended to do some checks
+or display something contained at SerializedProperty level but not edit how property is displayed.
+Retrieving the right property context is made contextual on active editor so it's not 100% certain that works everywhere and with anything.

@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-
-namespace CippSharp.Core
+﻿
+namespace CippSharp.Core.Attributes
 {
     public class ClampValueAttribute : AClampAttribute
     {

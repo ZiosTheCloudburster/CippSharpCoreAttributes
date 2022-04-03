@@ -1,8 +1,5 @@
 ﻿
-using System;
-using UnityEngine;
-
-namespace CippSharp.Core
+namespace CippSharp.Core.Attributes
 {
     /// <summary>
     /// Force a number to not go under a value.

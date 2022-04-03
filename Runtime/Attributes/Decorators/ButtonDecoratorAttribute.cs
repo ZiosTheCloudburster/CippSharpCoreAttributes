@@ -118,9 +118,6 @@ namespace CippSharp.Core.Attributes
 
             private void OnClickCallback(string callback)
             {
-//                potentialTargets.Clear();
-//                Debug.Log($"Clicked {callback} button.");
-
                 SerializedObjectUtils.GetActiveEditorTargetsObjectsPairs().ForEach(FilterAndInvokeCallback);
                 void FilterAndInvokeCallback(KeyValuePair<Editor, Object[]> pair)
                 {
@@ -150,36 +147,8 @@ namespace CippSharp.Core.Attributes
                         }
                         
                         serializedObject.ApplyModifiedProperties();
-
-//                        SerializedPropertyUtils.GetAllPropertiesOfType(serializedObject, SerializedPropertyType.Generic);    
-//                        Type type = ((object)o).GetType();
-//                        MethodInfo[] methods = type.GetMethods(ReflectionUtils.Common).Where(m => m.Name == callback).ToArray();
-//                        FieldInfo[] fields = type.GetFields(ReflectionUtils.Common).Where(AttributePredicate).ToArray();
-//                        bool AttributePredicate(FieldInfo f)
-//                        {
-//                            ButtonDecoratorAttribute[] attributes = f.GetCustomAttributes<ButtonDecoratorAttribute>().ToArray();
-//                            return !ArrayUtils.IsNullOrEmpty(attributes) && attributes.Any(b => b.Pairs.ContainsValue(callback));
-//                            
-//                        }
                     }
                 }
-              
-//                Debug.Log($"All targets count {allTargets.Count()}.");
-////                TODO: this filters only behaviours and not scriptables or properties
-//                int filteredTargets = 0;
-//                foreach (Object o in allTargets)
-//                {
-//                    object obj = o;
-//                    if (ReflectionUtils.HasMember(obj, callback, out MemberInfo member))
-//                    {
-//                        filteredTargets++;
-//                        //TODO: Relative serializedObject update
-//                        ReflectionUtils.TryCallMethod(obj, callback, out _, null);
-//                        //TODO: Relative serializedObject apply
-//                    }
-//                }
-                
-                
             }
             
 
