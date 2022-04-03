@@ -41,7 +41,10 @@ namespace CippSharp.Core
         }
         
         /// <summary>
-        /// Yes, even nested ones
+        /// Yes, even nested ones.
+        /// 
+        /// REMEMBER: if you want to save the reference to a property during the iteration you need to use <see cref="SerializedProperty.Copy"/>
+        /// method. It's unity flow, follow it!
         /// </summary>
         public static void IterateAllChildren(SerializedProperty property, SerializedPropertyAction @delegate)
         {

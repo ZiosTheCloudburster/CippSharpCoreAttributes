@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -35,8 +34,16 @@ namespace CippSharp.Core.Attributes
         {
             this.Pairs[name] = callback;
             this.GraphicStyle = style;
-//            this.DisplayName = name;
-//            this.Callback = callback;
+        }
+
+        /// <summary>
+        /// USAGE: Pair Format Template "DisplayName, Callback"
+        /// </summary>
+        /// <param name="style"></param>
+        /// <param name="pairs"></param>
+        public ButtonDecoratorAttribute(GUIButtonStyle style, params string[] pairs) : this(pairs)
+        {
+            this.GraphicStyle = style;
         }
 
         /// <summary>
@@ -45,22 +52,20 @@ namespace CippSharp.Core.Attributes
         /// <param name="pairs"></param>
         public ButtonDecoratorAttribute(params string[] pairs)
         {
-            if (ArrayUtils.IsNullOrEmpty(pairs))
+            if (!ArrayUtils.IsNullOrEmpty(pairs))
             {
-                return;
-            }
-
-            foreach (var pair in pairs)
-            {
-                string[] split = pair.Split(new [] {","}, StringSplitOptions.RemoveEmptyEntries);
-                if (split.Length == 2)
+                foreach (var pair in pairs)
                 {
-                    //Display Name
-                    split[0] = split[0].TrimStart(new char[] {' ',}).RemoveSpecialCharacters().TrimEnd(new char[]{' ', ','});
-                    //Callback
-                    split[1] = split[1].TrimStart(new char[] {' ', ','});
-                    //to storage!
-                    this.Pairs[split[0]] = split[1];
+                    string[] split = pair.Split(new [] {","}, StringSplitOptions.RemoveEmptyEntries);
+                    if (split.Length == 2)
+                    {
+                        //Display Name
+                        split[0] = split[0].TrimStart(new char[] {' ',}).RemoveSpecialCharacters().TrimEnd(new char[]{' ', ','});
+                        //Callback
+                        split[1] = split[1].TrimStart(new char[] {' ', ','});
+                        //to storage!
+                        this.Pairs[split[0]] = split[1];
+                    }
                 }
             }
         }
@@ -114,7 +119,7 @@ namespace CippSharp.Core.Attributes
             private void OnClickCallback(string callback)
             {
 //                potentialTargets.Clear();
-                Debug.Log($"Clicked {callback} button.");
+//                Debug.Log($"Clicked {callback} button.");
 
                 SerializedObjectUtils.GetActiveEditorTargetsObjectsPairs().ForEach(FilterAndInvokeCallback);
                 void FilterAndInvokeCallback(KeyValuePair<Editor, Object[]> pair)
@@ -133,7 +138,7 @@ namespace CippSharp.Core.Attributes
                         
                         foreach (var property in propertiesWithAttribute)
                         {
-                            Debug.Log($"Checking {property.propertyPath} on {o.name}.", o);
+//                            Debug.Log($"Checking {property.propertyPath} on {o.name}.", o);
                             SerializedPropertyUtils.TryEditLastParentLevel(property, OnLastParentLevel);
                             void OnLastParentLevel(ref object context)
                             {
