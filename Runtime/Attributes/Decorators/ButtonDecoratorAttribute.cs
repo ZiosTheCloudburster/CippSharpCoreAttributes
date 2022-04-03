@@ -218,49 +218,17 @@ namespace CippSharp.Core.Attributes
             /// <param name="propertiesWithAttribute"></param>
             private static void TrySearchInChildren(SerializedProperty property, string callback, ref List<SerializedProperty> propertiesWithAttribute)
             {
-//                IEnumerator childrenEnumerator = property.GetEnumerator();
-//                while (childrenEnumerator.MoveNext())
-//                {
-//                    SerializedProperty childProperty = childrenEnumerator.Current as SerializedProperty;
-//                    if (childProperty == null)
-//                    {
-//                        continue;
-//                    }
-//                    
-//                    Debug.Log($"iterating: {childProperty.name}, {childProperty.propertyPath}", childProperty.serializedObject.targetObject);
-//                }
-                
-                List<SerializedProperty> cashbox = new List<SerializedProperty>();
+                List<SerializedProperty> tmpElementsWithAttribute = new List<SerializedProperty>();
                 SerializedPropertyUtils.IterateAllChildren(property, OnIterate);
                 void OnIterate(SerializedProperty childProperty)
                 {
                     if (HasAttribute(childProperty, callback))
                     {
                         //You MUST use child property.Copy() to save the iteration in current state.
-                        cashbox.Add(childProperty.Copy());
+                        tmpElementsWithAttribute.Add(childProperty.Copy());
                     }
                 }
-                propertiesWithAttribute.AddRange(cashbox);
-//                Debug.Log($"Adding: {nameof(cashbox)}.{cashbox.Count} to {nameof(propertiesWithAttribute)}.{propertiesWithAttribute.Count}");
-//                Debug.Log($"Found {children.Length} children of property {property.propertyPath}.", property.serializedObject.targetObject);
-//                foreach (var childProperty in children)
-//                {
-//                    Debug.Log($"iterating: {childProperty.name}, {childProperty.propertyPath}");
-//
-
-//
-//                    try
-//                    {
-//                        if (childProperty.propertyType == SerializedPropertyType.Generic && (childProperty.isExpanded && childProperty.hasChildren))
-//                        {
-//                            TrySearchInChildrenRecursive(childProperty, callback, ref propertiesWithAttribute);
-//                        }
-//                    }
-//                    catch
-//                    {
-//                        //IGNORED
-//                    }
-//                }
+                propertiesWithAttribute.AddRange(tmpElementsWithAttribute);
             }
 
             /// <summary>
@@ -282,9 +250,7 @@ namespace CippSharp.Core.Attributes
                     //Ignored
                     return false;
                 }
-                
             }
-
         }
 #endif
     }

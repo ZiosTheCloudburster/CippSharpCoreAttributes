@@ -1,7 +1,9 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using CippSharp.Core.Extensions;
 using UnityEditor;
 using UnityEngine;
 
@@ -74,7 +76,7 @@ namespace CippSharp.Core.Attributes
         #endregion
         
         /// <summary>
-        /// Ma non mi dire
+        /// Get the PropertyAttributes of a Field
         /// </summary>
         /// <param name="field"></param>
         /// <returns></returns>
@@ -99,12 +101,12 @@ namespace CippSharp.Core.Attributes
         }
 
         /// <summary>
-        /// XLAM
+        /// Get the property relative FieldInfo and FieldType
         /// </summary>
         /// <param name="property"></param>
         /// <param name="fieldType"></param>
         /// <returns></returns>
-        public static FieldInfo GetFieldInfoFromProperty(SerializedProperty property, out System.Type fieldType)
+        public static FieldInfo GetFieldInfoFromProperty(SerializedProperty property, out Type fieldType)
         {
             fieldType = null;
             if (property == null)
@@ -123,6 +125,7 @@ namespace CippSharp.Core.Attributes
             {
                 
                 MethodInfo method = mType.GetMethod("GetFieldInfoFromProperty", ReflectionUtils.Common);
+                //for out parameter, array[1] is 'empty'
                 object[] parameters = new[] {(object) property, null,};
                 FieldInfo targetField = null;
                 targetField = (FieldInfo)method.Invoke(null, parameters);
@@ -135,7 +138,35 @@ namespace CippSharp.Core.Attributes
             }
             
             return null;
+        }
 
+        /// <summary>
+        /// Has attribute of type T?
+        /// </summary>
+        /// <param name="property"></param>
+        /// <param name="attribute"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static bool HasAttribute<T>(SerializedProperty property, out T attribute) where T : PropertyAttribute
+        {
+            FieldInfo fieldInfo = GetFieldInfoFromProperty(property, out Type type);
+            var attributes = GetPropertyAttributes(fieldInfo).Where(a => a is T).ToArray();
+            attribute = (T) attributes.FirstOrDefault(a => a is T);
+            return !ArrayUtils.IsNullOrEmpty(attributes) && attribute != null;
+        }
+
+        /// <summary>
+        /// Has attributes of type T?
+        /// </summary>
+        /// <param name="property"></param>
+        /// <param name="attributes"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static bool HasAttributes<T>(SerializedProperty property, out T[] attributes) where T : PropertyAttribute
+        {
+            FieldInfo fieldInfo = GetFieldInfoFromProperty(property, out Type type);
+            attributes = GetPropertyAttributes(fieldInfo).SelectIf(a => a is T, a => (T)a).ToArray();
+            return !ArrayUtils.IsNullOrEmpty(attributes);
         }
     }
 }
