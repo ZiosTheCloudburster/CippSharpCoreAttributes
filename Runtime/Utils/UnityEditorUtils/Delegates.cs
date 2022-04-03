@@ -16,6 +16,12 @@ namespace CippSharp.Core
     /// </summary>
     /// <param name="context"></param>
     public delegate void GenericRefAction(ref object context);
+
+    /// <summary>
+    /// Generic callback with serialized property
+    /// </summary>
+    /// <param name="property"></param>
+    public delegate void SerializedPropertyAction(SerializedProperty property);
     
     /// <summary>
     /// Custom Delegate to draw a serialized property

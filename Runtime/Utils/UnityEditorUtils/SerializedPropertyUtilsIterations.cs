@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 
@@ -7,11 +8,11 @@ namespace CippSharp.Core
     public static partial class SerializedPropertyUtils
     {
         /// <summary>
-        /// Get children of property
+        /// WARNING: this loses references to property path and name 
         /// </summary>
         /// <param name="property"></param>
         /// <returns></returns>
-        public static IEnumerable<SerializedProperty> GetChildren(SerializedProperty property)
+        public static IEnumerable<SerializedProperty> GetChildren(this SerializedProperty property)
         {
             property = property.Copy();
             var nextElement = property.Copy();
@@ -36,6 +37,24 @@ namespace CippSharp.Core
                 {
                     break;
                 }
+            }
+        }
+        
+        /// <summary>
+        /// Yes, even nested ones
+        /// </summary>
+        public static void IterateAllChildren(SerializedProperty property, SerializedPropertyAction @delegate)
+        {
+            IEnumerator childrenEnumerator = property.GetEnumerator();
+            while (childrenEnumerator.MoveNext())
+            {
+                SerializedProperty childProperty = childrenEnumerator.Current as SerializedProperty;
+                if (childProperty == null)
+                {
+                    continue;
+                }
+                
+                @delegate.Invoke(childProperty);
             }
         }
         

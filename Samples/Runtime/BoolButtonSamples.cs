@@ -54,8 +54,12 @@ namespace CippSharp.Core.Attributes.Samples
         public class Madness0
         {
             [ButtonDecorator("Print if I'm Crazy", nameof(PrintYes))]
+            [ButtonDecorator(new []{"I don't know,"+nameof(PrintYes)})]
             public bool ImThatCrazy = false;
 
+            [Space(10)]
+            public NestData1 nestData1 = new NestData1();
+            
             private void PrintYes()
             {
                 Debug.Log("if i can print this, it's a success!");
@@ -109,6 +113,8 @@ namespace CippSharp.Core.Attributes.Samples
         
         //Lets see if it is
         public Madness0 thisIsMadness = new Madness0();
+
+        public bool works = false;
     }
 #pragma warning restore 414
 #pragma warning restore 649

@@ -341,7 +341,7 @@ MonoBehaviour:
   nestData1:
     printSomething: 0
   tooltip3: Example of ButtonDecorator
-  uselessCount: 0
+  uselessCount: 1
   thisIsMadness:
     ImThatCrazy: 0
 --- !u!1 &1858031618

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -196,7 +197,7 @@ namespace CippSharp.Core.Attributes
 
                     if (property.propertyType == SerializedPropertyType.Generic && (property.isExpanded && property.hasChildren))
                     {
-                        TrySearchInChildrenRecursive(property, callback, ref propertiesWithAttribute);
+                        TrySearchInChildren(property, callback, ref propertiesWithAttribute);
                     }
                 }
                 
@@ -209,28 +210,51 @@ namespace CippSharp.Core.Attributes
             /// <param name="property"></param>
             /// <param name="callback"></param>
             /// <param name="propertiesWithAttribute"></param>
-            private static void TrySearchInChildrenRecursive(SerializedProperty property, string callback, ref List<SerializedProperty> propertiesWithAttribute)
+            private static void TrySearchInChildren(SerializedProperty property, string callback, ref List<SerializedProperty> propertiesWithAttribute)
             {
-                SerializedProperty[] children = SerializedPropertyUtils.GetChildren(property).ToArray();
-                foreach (var childProperty in children)
+//                IEnumerator childrenEnumerator = property.GetEnumerator();
+//                while (childrenEnumerator.MoveNext())
+//                {
+//                    SerializedProperty childProperty = childrenEnumerator.Current as SerializedProperty;
+//                    if (childProperty == null)
+//                    {
+//                        continue;
+//                    }
+//                    
+//                    Debug.Log($"iterating: {childProperty.name}, {childProperty.propertyPath}", childProperty.serializedObject.targetObject);
+//                }
+                
+                List<SerializedProperty> cashbox = new List<SerializedProperty>();
+                SerializedPropertyUtils.IterateAllChildren(property, OnIterate);
+                void OnIterate(SerializedProperty childProperty)
                 {
+                    Debug.Log($"iterating: {childProperty.name}, {childProperty.propertyPath}");
                     if (HasAttribute(childProperty, callback))
                     {
-                        propertiesWithAttribute.Add(childProperty);
-                    }
-
-                    try
-                    {
-                        if (childProperty.propertyType == SerializedPropertyType.Generic && (childProperty.isExpanded && childProperty.hasChildren))
-                        {
-                            TrySearchInChildrenRecursive(childProperty, callback, ref propertiesWithAttribute);
-                        }
-                    }
-                    catch
-                    {
-                        //IGNORED
+                        Debug.Log($"Child {childProperty.propertyPath} has attribute.");
+                        cashbox.Add(childProperty);
                     }
                 }
+                propertiesWithAttribute.AddRange(cashbox);
+//                Debug.Log($"Found {children.Length} children of property {property.propertyPath}.", property.serializedObject.targetObject);
+//                foreach (var childProperty in children)
+//                {
+//                    Debug.Log($"iterating: {childProperty.name}, {childProperty.propertyPath}");
+//
+
+//
+//                    try
+//                    {
+//                        if (childProperty.propertyType == SerializedPropertyType.Generic && (childProperty.isExpanded && childProperty.hasChildren))
+//                        {
+//                            TrySearchInChildrenRecursive(childProperty, callback, ref propertiesWithAttribute);
+//                        }
+//                    }
+//                    catch
+//                    {
+//                        //IGNORED
+//                    }
+//                }
             }
 
             /// <summary>

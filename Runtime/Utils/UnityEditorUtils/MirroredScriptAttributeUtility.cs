@@ -10,6 +10,10 @@ namespace CippSharp.Core.Attributes
     internal static class MirroredScriptAttributeUtility
     {
         #region Mirrored Type
+        
+        /// <summary>
+        /// Mirrored type backing field
+        /// </summary>
         private static Type mirroredType = null;
         
         /// <summary>
@@ -30,11 +34,43 @@ namespace CippSharp.Core.Attributes
             }
         }
 
-        public static bool IsValidMirroredType
+        /// <summary>
+        /// Is mirrored type != null?
+        /// </summary>
+        public static bool IsValidMirroredType => MirroredType != null;
+
+        #endregion
+
+        #region Instance
+
+        /// <summary>
+        /// Instance backing field
+        /// </summary>
+        private static object instance = null;
+
+        /// <summary>
+        /// Lazy Instance
+        /// </summary>
+        public static object Instance
         {
-            get { return MirroredType != null; }
+            get
+            {
+                if (instance != null)
+                {
+                    return instance;
+                }
+
+                var mType = MirroredType;
+                if (mType != null)
+                {
+                    instance = Activator.CreateInstance(mType);
+                }
+
+                return instance;
+            }
         }
         
+
         #endregion
         
         /// <summary>
@@ -66,31 +102,38 @@ namespace CippSharp.Core.Attributes
         /// XLAM
         /// </summary>
         /// <param name="property"></param>
-        /// <param name="type"></param>
+        /// <param name="fieldType"></param>
         /// <returns></returns>
-        public static FieldInfo GetFieldInfoFromProperty(SerializedProperty property, out System.Type type)
+        public static FieldInfo GetFieldInfoFromProperty(SerializedProperty property, out System.Type fieldType)
         {
+            fieldType = null;
+            if (property == null)
+            {
+                Debug.LogError("Property is null");
+                return null;
+            }
+            
             Type mType = MirroredType;
             if (mType == null)
             {
-                type = null;
-                return null;
-            }
+                return null;}
 
+            
             try
             {
+                
                 MethodInfo method = mType.GetMethod("GetFieldInfoFromProperty", ReflectionUtils.Common);
-                object[] parameters = new[] {(object) property, (object)(Type)null,};
-                FieldInfo targetField = (FieldInfo)method.Invoke(null, parameters);
-                type = parameters[1] as Type;
+                object[] parameters = new[] {(object) property, null,};
+                FieldInfo targetField = null;
+                targetField = (FieldInfo)method.Invoke(null, parameters);
+                fieldType = parameters[1] as Type;
                 return targetField;
             }
             catch (Exception e)
             {
-                Debug.Log($"Failed for {e.Message}");
+                Debug.Log($"{nameof(GetFieldInfoFromProperty)}() failed on property {property.propertyPath} for exception: {e.Message}, stack: {e.StackTrace}.", property.serializedObject.targetObject);
             }
-
-            type = null;
+            
             return null;
 
         }
