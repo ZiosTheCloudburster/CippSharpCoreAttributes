@@ -168,6 +168,11 @@ MonoBehaviour:
   minValueClampedAt0: 0
   maxValueClampedAt2dot43: 2.43
   between0And1: 0.71
+  tooltip1: Clamp with decorator is possible? Yes, but you need to reference the
+    property.
+  minValueClampedAtMinusOne: -1
+  maxValueClampedAt3dot1415: 3.1415
+  betweenMinusOneAndTwo: 1.18
 --- !u!1 &627598817
 GameObject:
   m_ObjectHideFlags: 0

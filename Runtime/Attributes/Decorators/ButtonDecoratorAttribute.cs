@@ -29,8 +29,16 @@ namespace CippSharp.Core.Attributes
         /// Graphic Sytle of all buttons.
         /// </summary>
         public GUIButtonStyle GraphicStyle { get; protected set; } = GUIButtonStyle.MiniButton;
+
+        /// <summary>
+        /// Default constructor is private
+        /// </summary>
+        private ButtonDecoratorAttribute()
+        {
+            
+        }
         
-        public ButtonDecoratorAttribute(string name, string callback, GUIButtonStyle style = GUIButtonStyle.MiniButton)
+        public ButtonDecoratorAttribute(string name, string callback, GUIButtonStyle style = GUIButtonStyle.MiniButton) : this ()
         {
             this.Pairs[name] = callback;
             this.GraphicStyle = style;
@@ -50,7 +58,7 @@ namespace CippSharp.Core.Attributes
         /// USAGE: Pair Format Template "DisplayName, Callback"
         /// </summary>
         /// <param name="pairs"></param>
-        public ButtonDecoratorAttribute(params string[] pairs)
+        public ButtonDecoratorAttribute(params string[] pairs) : this ()
         {
             if (!ArrayUtils.IsNullOrEmpty(pairs))
             {

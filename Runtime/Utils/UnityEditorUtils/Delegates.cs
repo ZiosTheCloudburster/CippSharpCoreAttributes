@@ -23,6 +23,12 @@ namespace CippSharp.Core
     /// <param name="property"></param>
     public delegate void SerializedPropertyAction(SerializedProperty property);
     
+    
+    /// <summary>
+    /// Generic callback with serialized property
+    /// </summary>
+    
+    
     /// <summary>
     /// Custom Delegate to draw a serialized property
     /// </summary>

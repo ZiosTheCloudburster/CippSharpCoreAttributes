@@ -95,8 +95,6 @@ namespace CippSharp.Core.Attributes.Samples
         
         [Space(6)]
         public string tooltip3 = "Example of ButtonDecorator";
-//        [ButtonDecorator("-", nameof(DecreaseUselessCount))]
-//        [ButtonDecorator("+", nameof(IncreaseUselessCount))]
         [ButtonDecorator(new []{"Decrease (-),"+nameof(DecreaseUselessCount), "Increase (+),"+nameof(IncreaseUselessCount)})]
         public int uselessCount = 0;
 
