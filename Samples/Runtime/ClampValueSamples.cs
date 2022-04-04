@@ -1,4 +1,4 @@
-﻿
+﻿#if UNITY_EDITOR
 using UnityEngine;
 
 namespace CippSharp.Core.Attributes.Samples
@@ -25,3 +25,4 @@ namespace CippSharp.Core.Attributes.Samples
         public float betweenMinusOneAndTwo = 1;
     }
 }
+#endif
