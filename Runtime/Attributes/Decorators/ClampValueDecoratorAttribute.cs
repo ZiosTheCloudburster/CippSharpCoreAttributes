@@ -11,8 +11,10 @@ namespace CippSharp.Core.Attributes
     {
         public enum Behaviour : sbyte
         {
+            //Undefined, hidden
             //Undefined = -1,
-            //Clamp min and max, hidden by default
+            
+            //Clamp min and max, hidden
             //Default = 0,
             
             /// <summary>

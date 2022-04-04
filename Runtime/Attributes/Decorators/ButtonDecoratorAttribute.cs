@@ -126,37 +126,65 @@ namespace CippSharp.Core.Attributes
 
             private void OnClickCallback(string callback)
             {
-                SerializedObjectUtils.GetActiveEditorTargetsObjectsPairs().ForEach(FilterAndInvokeCallback);
-                void FilterAndInvokeCallback(KeyValuePair<Editor, Object[]> pair)
+                DecoratorDrawersUtils.IteratePropertiesWithAttribute<ButtonDecoratorAttribute>(AttributePredicate, CheckDelegate);
+                bool AttributePredicate(ButtonDecoratorAttribute c)
                 {
-                    foreach (var o in pair.Value)
-                    {
-                        SerializedObject serializedObject = new SerializedObject(o);
-                        SerializedProperty[] propertiesWithAttribute = GetPropertiesWithAttribute(serializedObject, callback);
-                        if (ArrayUtils.IsNullOrEmpty(propertiesWithAttribute))
-                        {
-                            continue;
-                        }
-
-                        Undo.RecordObject(o, "Before Click");
-                        serializedObject.Update();
+                    return c.Pairs.ContainsValue(callback);
+                }
+                void CheckDelegate(Object target, SerializedObject serializedObject, SerializedProperty[] properties)
+                {
+                    Undo.RecordObject(target, "Before Click");
+                    serializedObject.Update();
+                    
+                    serializedObject.Update();
                         
-                        foreach (var property in propertiesWithAttribute)
-                        {
+                    foreach (var property in properties)
+                    {
 //                            Debug.Log($"Checking {property.propertyPath} on {o.name}.", o);
-                            SerializedPropertyUtils.TryEditLastParentLevel(property, OnLastParentLevel);
-                            void OnLastParentLevel(ref object context)
+                        SerializedPropertyUtils.TryEditLastParentLevel(property, OnLastParentLevel);
+                        void OnLastParentLevel(ref object context)
+                        {
+                            if (ReflectionUtils.TryCallMethod(context, callback, out _, null))
                             {
-                                if (ReflectionUtils.TryCallMethod(context, callback, out _, null))
-                                {
 //                                    Debug.Log($"Button Clicked on {o.name} at {property.propertyPath}.", o);
-                                }
                             }
                         }
-                        
-                        serializedObject.ApplyModifiedProperties();
                     }
+                        
+                    serializedObject.ApplyModifiedProperties();
                 }
+
+//                SerializedObjectUtils.GetActiveEditorTargetsObjectsPairs().ForEach(FilterAndInvokeCallback);
+//                void FilterAndInvokeCallback(KeyValuePair<Editor, Object[]> pair)
+//                {
+//                    foreach (var o in pair.Value)
+//                    {
+//                        SerializedObject serializedObject = new SerializedObject(o);
+//                        SerializedProperty[] propertiesWithAttribute = GetPropertiesWithAttribute(serializedObject, callback);
+//                        if (ArrayUtils.IsNullOrEmpty(propertiesWithAttribute))
+//                        {
+//                            continue;
+//                        }
+//
+//                        Undo.RecordObject(o, "Before Click");
+//                        serializedObject.Update();
+//                        
+//                        foreach (var property in propertiesWithAttribute)
+//                        {
+////                            Debug.Log($"Checking {property.propertyPath} on {o.name}.", o);
+//                            SerializedPropertyUtils.TryEditLastParentLevel(property, OnLastParentLevel);
+//                            void OnLastParentLevel(ref object context)
+//                            {
+//                                if (ReflectionUtils.TryCallMethod(context, callback, out _, null))
+//                                {
+////                                    Debug.Log($"Button Clicked on {o.name} at {property.propertyPath}.", o);
+//                                }
+//                            }
+//                        }
+//                        
+//                        serializedObject.ApplyModifiedProperties();
+//                    }
+//                }
             }
             
 

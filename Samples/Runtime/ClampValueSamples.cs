@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 
 namespace CippSharp.Core.Attributes.Samples
 {
-    public class ClampValueSamples : MonoBehaviour
+    internal class ClampValueSamples : MonoBehaviour
     {
         public string tooltip0 = "Clamp min & max value drawers samples.";
         [ClampMinValue(0)]
