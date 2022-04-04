@@ -152,6 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bitmaskDrawer: 5
   propertyWithUglyName: 1
+  tagSelector: Untagged
 --- !u!4 &9406080
 Transform:
   m_ObjectHideFlags: 0
