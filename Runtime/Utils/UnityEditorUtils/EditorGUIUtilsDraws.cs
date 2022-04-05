@@ -179,6 +179,16 @@ namespace CippSharp.Core
         
         #region Draw Help Box
 
+//        /// <summary>
+//        /// The height of an help box based on his text message.
+//        /// </summary>
+//        /// <param name="helpBoxMessage"></param>
+//        /// <returns></returns>
+//        public static float GetHelpBoxHeight(string helpBoxMessage)
+//        {
+//            return GetHelpBoxHeight(ref helpBoxMessage);
+//        }
+        
         /// <summary>
         /// The height of an help box based on his text message.
         /// </summary>
@@ -186,21 +196,19 @@ namespace CippSharp.Core
         /// <returns></returns>
         public static float GetHelpBoxHeight(string helpBoxMessage)
         {
-            return GetHelpBoxHeight(ref helpBoxMessage);
+            return GetHelpBoxHeight(helpBoxMessage, Screen.width);
+//            GUIStyle style = EditorStyles.helpBox;
+//            GUIContent descriptionWrapper = new GUIContent(helpBoxMessage);
+//            return style.CalcHeight(descriptionWrapper, Screen.width);
         }
-        
-        /// <summary>
-        /// The height of an help box based on his text message.
-        /// </summary>
-        /// <param name="helpBoxMessage"></param>
-        /// <returns></returns>
-        public static float GetHelpBoxHeight(ref string helpBoxMessage)
+
+        public static float GetHelpBoxHeight(string helpBoxMessage, float width)
         {
             GUIStyle style = EditorStyles.helpBox;
             GUIContent descriptionWrapper = new GUIContent(helpBoxMessage);
-            return style.CalcHeight(descriptionWrapper, Screen.width);
+            return style.CalcHeight(descriptionWrapper, width);
         }
-        
+
         /// <summary>
         /// Draw an help box with the passed rect and text.
         /// It doesn't matter about his height/resizing..

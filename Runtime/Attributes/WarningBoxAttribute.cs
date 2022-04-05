@@ -3,7 +3,7 @@ namespace CippSharp.Core.Attributes
 {
     public class WarningBoxAttribute : HelpBoxAttribute
     {
-        public WarningBoxAttribute()
+        protected WarningBoxAttribute()
         {
             this.Type = MessageType.Warning;
         }

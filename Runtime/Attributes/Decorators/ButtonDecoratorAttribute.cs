@@ -33,7 +33,7 @@ namespace CippSharp.Core.Attributes
         /// <summary>
         /// Default constructor is private
         /// </summary>
-        private ButtonDecoratorAttribute()
+        protected ButtonDecoratorAttribute()
         {
             
         }

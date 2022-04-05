@@ -40,7 +40,7 @@ namespace CippSharp.Core.Attributes
         /// <summary>
         /// Default constructor is private
         /// </summary>
-        private ClampValueDecoratorAttribute()
+        protected ClampValueDecoratorAttribute()
         {
             
         }

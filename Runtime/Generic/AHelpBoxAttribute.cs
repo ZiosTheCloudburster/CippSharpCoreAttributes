@@ -11,7 +11,6 @@ using UnityEngine;
 
 namespace CippSharp.Core.Attributes
 {
-//    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
     public abstract class AHelpBoxAttribute : AFieldAttribute
     {
         public enum ShowOptions : byte
