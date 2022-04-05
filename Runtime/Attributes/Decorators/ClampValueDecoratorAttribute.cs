@@ -27,7 +27,7 @@ namespace CippSharp.Core.Attributes
             ClampMaxOnly = 2,
         }
         
-        public string FieldName { get; protected set; } = string.Empty;
+        public string FieldNameOrIdentifier { get; protected set; } = string.Empty;
         //initial value is undefined -1, default value to clamp min and max is 0
         public Behaviour Mode { get; protected set; } = (Behaviour)(sbyte)-1;
         
@@ -47,7 +47,7 @@ namespace CippSharp.Core.Attributes
         
         public ClampValueDecoratorAttribute(string fieldName, int value, Behaviour behaviour) : this ()
         {
-            this.FieldName = fieldName;
+            this.FieldNameOrIdentifier = fieldName;
             this.Mode = behaviour;
             switch (this.Mode)
             {
@@ -62,7 +62,7 @@ namespace CippSharp.Core.Attributes
 
         public ClampValueDecoratorAttribute(string fieldName, float value, Behaviour behaviour) : this ()
         {
-            this.FieldName = fieldName;
+            this.FieldNameOrIdentifier = fieldName;
             this.Mode = behaviour;
             switch (this.Mode)
             {
@@ -77,7 +77,7 @@ namespace CippSharp.Core.Attributes
 
         public ClampValueDecoratorAttribute(string fieldName, int minValue, int maxValue) : this()
         {
-            this.FieldName = fieldName;
+            this.FieldNameOrIdentifier = fieldName;
             this.Mode = (Behaviour)(sbyte)0;
             this.IntegerMinValue = minValue;
             this.IntegerMaxValue = maxValue;
@@ -85,7 +85,7 @@ namespace CippSharp.Core.Attributes
         
         public ClampValueDecoratorAttribute(string fieldName, float minValue, float maxValue) : this()
         {
-            this.FieldName = fieldName;
+            this.FieldNameOrIdentifier = fieldName;
             this.Mode = (Behaviour)(sbyte)0;
             this.FloatMinValue = minValue;
             this.FloatMaxValue = maxValue;
@@ -97,7 +97,7 @@ namespace CippSharp.Core.Attributes
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return base.Equals(other) && string.Equals(FieldName, other.FieldName) && Mode == other.Mode && IntegerMinValue == other.IntegerMinValue && FloatMinValue.Equals(other.FloatMinValue) && IntegerMaxValue == other.IntegerMaxValue && FloatMaxValue.Equals(other.FloatMaxValue);
+            return base.Equals(other) && string.Equals(FieldNameOrIdentifier, other.FieldNameOrIdentifier) && Mode == other.Mode && IntegerMinValue == other.IntegerMinValue && FloatMinValue.Equals(other.FloatMinValue) && IntegerMaxValue == other.IntegerMaxValue && FloatMaxValue.Equals(other.FloatMaxValue);
         }
 
         public override bool Equals(object obj)
@@ -113,7 +113,7 @@ namespace CippSharp.Core.Attributes
             unchecked
             {
                 int hashCode = base.GetHashCode();
-                hashCode = (hashCode * 397) ^ (FieldName != null ? FieldName.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (FieldNameOrIdentifier != null ? FieldNameOrIdentifier.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (int) Mode;
                 hashCode = (hashCode * 397) ^ IntegerMinValue;
                 hashCode = (hashCode * 397) ^ FloatMinValue.GetHashCode();
@@ -183,7 +183,7 @@ namespace CippSharp.Core.Attributes
             {
                 if (this.attribute is ClampValueDecoratorAttribute clampValueDecoratorAttribute)
                 {
-                    if (!string.IsNullOrEmpty(clampValueDecoratorAttribute.FieldName))
+                    if (!string.IsNullOrEmpty(clampValueDecoratorAttribute.FieldNameOrIdentifier))
                     {
                        EverybodyDoTheClampCheck(clampValueDecoratorAttribute);
                     }

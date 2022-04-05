@@ -321,6 +321,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c91818825bcb7948a1604693bb236e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tooltip0: HelpBox Examples. Remember drawers like this doesn't support any other
+    editor customization.
+  boolWithHelpBox: 0
+  stringHelpBoxOnly: 
+  toggleWarningBox: 1
+  errorBoxWhenOver10: 9.78
+  tooltip1: HelpBox Decorators. Have fun with them. Just remember to specify the
+    field name.
+  enableErrorBoxOnWithMultipleDecoratorsBox: 1
+  withMultipleDecoratorsBox: 
 --- !u!4 &1083455908
 Transform:
   m_ObjectHideFlags: 0

@@ -27,8 +27,13 @@ namespace CippSharp.Core.Attributes.Samples
         [TextArea(1, 3)]
         public string tooltip1 = "HelpBox Decorators. Have fun with them. Just remember to specify the field name.";
 
+        public bool enableErrorBoxOnWithMultipleDecoratorsBox = false;
+        [HelpBoxDecorator(nameof(withMultipleDecoratorsBox), "Finally you wrote something!", nameof(IsNotNullOrEmptyWithMultipleDecoratorsBox), true)]
+        [WarningBoxDecorator(nameof(withMultipleDecoratorsBox), "This string is null or empty!", nameof(IsNotNullOrEmptyWithMultipleDecoratorsBox), false)]
+        [ErrorBoxDecorator(nameof(withMultipleDecoratorsBox), "This is an error box! lol", nameof(enableErrorBoxOnWithMultipleDecoratorsBox))]
         public string withMultipleDecoratorsBox = "Ciao!";
 
+        private bool IsNotNullOrEmptyWithMultipleDecoratorsBox => !string.IsNullOrEmpty(withMultipleDecoratorsBox);
     }
 }
 #endif
