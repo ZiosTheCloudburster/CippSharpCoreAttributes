@@ -15,7 +15,8 @@ namespace CippSharp.Core.Attributes
     /// it tries to find the most correct case.
     ///
     /// It doesn't cover all cases like a PropertyDrawer that ensure the 100% reference.
-    /// Thi is more like 80-85% yes. 
+    /// Thi is more like 80-85% yes. Don't do things like nested classes with fields and this attribute with same names...
+    /// well you'll gather what you sow 
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true, Inherited = true)]
     public class ButtonDecoratorAttribute : AFieldAttribute
@@ -187,75 +188,75 @@ namespace CippSharp.Core.Attributes
 //                }
             }
             
+//
+//            /// <summary>
+//            /// Retrieve all properties with <see cref="ButtonDecoratorAttribute"/>
+//            /// with match at least one of the callbacks.
+//            /// </summary>
+//            /// <param name="serializedObject"></param>
+//            /// <param name="callback"></param>
+//            /// <returns></returns>
+//            private static SerializedProperty[] GetPropertiesWithAttribute(SerializedObject serializedObject, string callback)
+//            {
+//                List<SerializedProperty> propertiesWithAttribute = new List<SerializedProperty>();
+//                SerializedProperty[] allProperties = SerializedPropertyUtils.GetAllProperties(serializedObject);
+//                foreach (var property in allProperties)
+//                {
+//                    if (HasAttribute(property, callback))
+//                    {
+//                        propertiesWithAttribute.Add(property);
+//                    }
+//
+//                    if (property.propertyType == SerializedPropertyType.Generic && (property.isExpanded && property.hasChildren))
+//                    {
+//                        TrySearchInChildren(property, callback, ref propertiesWithAttribute);
+//                    }
+//                }
+//                
+//                return propertiesWithAttribute.ToArray();
+//            }
 
-            /// <summary>
-            /// Retrieve all properties with <see cref="ButtonDecoratorAttribute"/>
-            /// with match at least one of the callbacks.
-            /// </summary>
-            /// <param name="serializedObject"></param>
-            /// <param name="callback"></param>
-            /// <returns></returns>
-            private static SerializedProperty[] GetPropertiesWithAttribute(SerializedObject serializedObject, string callback)
-            {
-                List<SerializedProperty> propertiesWithAttribute = new List<SerializedProperty>();
-                SerializedProperty[] allProperties = SerializedPropertyUtils.GetAllProperties(serializedObject);
-                foreach (var property in allProperties)
-                {
-                    if (HasAttribute(property, callback))
-                    {
-                        propertiesWithAttribute.Add(property);
-                    }
-
-                    if (property.propertyType == SerializedPropertyType.Generic && (property.isExpanded && property.hasChildren))
-                    {
-                        TrySearchInChildren(property, callback, ref propertiesWithAttribute);
-                    }
-                }
-                
-                return propertiesWithAttribute.ToArray();
-            }
-
-            /// <summary>
-            /// Iterate children properties recursively, but avoid not expanded or properties with no children
-            /// </summary>
-            /// <param name="property"></param>
-            /// <param name="callback"></param>
-            /// <param name="propertiesWithAttribute"></param>
-            private static void TrySearchInChildren(SerializedProperty property, string callback, ref List<SerializedProperty> propertiesWithAttribute)
-            {
-                List<SerializedProperty> tmpElementsWithAttribute = new List<SerializedProperty>();
-                SerializedPropertyUtils.IterateAllChildren(property, OnIterate);
-                void OnIterate(SerializedProperty childProperty)
-                {
-                    if (HasAttribute(childProperty, callback))
-                    {
-                        //You MUST use child property.Copy() to save the iteration in current state.
-                        tmpElementsWithAttribute.Add(childProperty.Copy());
-                    }
-                }
-                propertiesWithAttribute.AddRange(tmpElementsWithAttribute);
-            }
-
-            /// <summary>
-            /// Has Attribute?
-            /// </summary>
-            /// <param name="property"></param>
-            /// <param name="callback"></param>
-            /// <returns></returns>
-            private static bool HasAttribute(SerializedProperty property, string callback)
-            {
-                try
-                {
-                    FieldInfo fieldInfo = MirroredScriptAttributeUtility.GetFieldInfoFromProperty(property, out Type type);
-                    List<PropertyAttribute> attributes = MirroredScriptAttributeUtility.GetPropertyAttributes(fieldInfo);
-                    return !ArrayUtils.IsNullOrEmpty(attributes) && attributes.Any(a => a is ButtonDecoratorAttribute buttonDecoratorAttribute && buttonDecoratorAttribute.Pairs.ContainsValue(callback));
-                }
-                catch
-                {
-                    //Ignored
-                    return false;
-                }
-            }
+//            /// <summary>
+//            /// Iterate children properties recursively, but avoid not expanded or properties with no children
+//            /// </summary>
+//            /// <param name="property"></param>
+//            /// <param name="callback"></param>
+//            /// <param name="propertiesWithAttribute"></param>
+//            private static void TrySearchInChildren(SerializedProperty property, string callback, ref List<SerializedProperty> propertiesWithAttribute)
+//            {
+//                List<SerializedProperty> tmpElementsWithAttribute = new List<SerializedProperty>();
+//                SerializedPropertyUtils.IterateAllChildren(property, OnIterate);
+//                void OnIterate(SerializedProperty childProperty)
+//                {
+//                    if (HasAttribute(childProperty, callback))
+//                    {
+//                        //You MUST use child property.Copy() to save the iteration in current state.
+//                        tmpElementsWithAttribute.Add(childProperty.Copy());
+//                    }
+//                }
+//                propertiesWithAttribute.AddRange(tmpElementsWithAttribute);
+//            }
+//
+//            /// <summary>
+//            /// Has Attribute?
+//            /// </summary>
+//            /// <param name="property"></param>
+//            /// <param name="callback"></param>
+//            /// <returns></returns>
+//            private static bool HasAttribute(SerializedProperty property, string callback)
+//            {
+//                try
+//                {
+//                    FieldInfo fieldInfo = MirroredScriptAttributeUtility.GetFieldInfoFromProperty(property, out Type type);
+//                    List<PropertyAttribute> attributes = MirroredScriptAttributeUtility.GetPropertyAttributes(fieldInfo);
+//                    return !ArrayUtils.IsNullOrEmpty(attributes) && attributes.Any(a => a is ButtonDecoratorAttribute buttonDecoratorAttribute && buttonDecoratorAttribute.Pairs.ContainsValue(callback));
+//                }
+//                catch
+//                {
+//                    //Ignored
+//                    return false;
+//                }
+//            }
         }
 #endif
     }

@@ -53,7 +53,7 @@ namespace CippSharp.Core.Attributes.Samples
         /// </summary>
         [PreviewCustomTexture("AttributesSamplesSubmarine720 t:Texture2D")]
         [ButtonDecorator("Open Image Url", nameof(OpenImageUrl))]
-        public float robot = 45;
+        public float value = 45;
 
         void OpenImageUrl()
         {
