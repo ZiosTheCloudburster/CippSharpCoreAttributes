@@ -1,20 +1,34 @@
 ﻿#if UNITY_2019_4_OR_NEWER
 #if UNITY_EDITOR
-using UnityEditor;
+using System;
 using UnityEngine;
+using CippSharp.Core;
+using UnityEditor;
 using Object = UnityEngine.Object;
+
 #endif
 
 namespace CippSharp.Core.Attributes
 {
-    public class PreviewAttribute : APreviewAttribute
+    public class PreviewCustomTextureAttribute : PreviewAttribute
     {
-        public PreviewAttribute()
+        /// <summary>
+        /// Texture path in resources or in asset database
+        /// </summary>
+        public string TexturePath { get; protected set; } = "";
+
+        protected PreviewCustomTextureAttribute()
         {
-            this.PreviewSettings = Settings.Default;
+            
         }
-        
-        public PreviewAttribute(bool editable = true, UnityEngine.ScaleMode scaleMode = UnityEngine.ScaleMode.ScaleToFit, int measure = 128, string shaderPath = "", bool foldable = false)
+
+        public PreviewCustomTextureAttribute(string texturePath) : this()
+        {
+            this.TexturePath = texturePath;
+        }
+
+        public PreviewCustomTextureAttribute(string texturePath, bool editable = true, UnityEngine.ScaleMode scaleMode = UnityEngine.ScaleMode.ScaleToFit, int measure = 128, string shaderPath = "", bool foldable = false)
+            : this(texturePath)
         {
             this.PreviewSettings = new Settings()
             {
@@ -25,66 +39,21 @@ namespace CippSharp.Core.Attributes
                 foldable = foldable
             };
         }
-
-        public PreviewAttribute(bool editable = true, bool foldable = false, UnityEngine.ScaleMode scaleMode = UnityEngine.ScaleMode.ScaleToFit, int measure = 128, string shaderPath = "")
-        {
-            this.PreviewSettings = new Settings()
-            {
-                editable = editable,
-                scaleMode = scaleMode,
-                measure = measure,
-                shaderPath = shaderPath,
-                foldable = foldable
-            };
-        }
-
 
         #region Custom Editor
 #if UNITY_EDITOR
-        [CustomPropertyDrawer(typeof(PreviewAttribute))]
-        public class PreviewAttributeDrawer : PropertyDrawer
+        [CustomPropertyDrawer(typeof(PreviewCustomTextureAttribute))]
+        public class PreviewCustomTextureAttributeDrawer : PreviewAttributeDrawer
         {
-            #region Default Material
-
-            /// <summary>
-            /// Backing field
-            /// </summary>
-            private static Material uiDefault = null;
-
-            /// <summary>
-            /// Unity's default ui material to draw the preview texture
-            /// </summary>
-            protected static Material UIDefault
-            {
-                get
-                {
-                    if (uiDefault != null)
-                    {
-                        return uiDefault;
-                    }
-
-                    uiDefault = new Material(Shader.Find("UI/Default"));
-                    return uiDefault;
-                }
-            }
-
-            #endregion
-
-            protected Texture2D currentPreview = null;
-            protected Material currentMaterial = null;
-            
-//            private float additionalHeight = 0;
-
             public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
             {
                 float height = EditorGUIUtils.GetPropertyHeight(property, label);
-                if (this.attribute is PreviewAttribute previewAttribute && property.propertyType == SerializedPropertyType.ObjectReference)
+                if (this.attribute is PreviewCustomTextureAttribute previewAttribute)
                 {
                     Settings previewSettings = previewAttribute.PreviewSettings;
                     
                     //Did you know? unity calls get height before gui draws so, you can cache things here! :D
-                    Object reference = property.objectReferenceValue;
-                    currentPreview = AssetPreview.GetAssetPreview(reference);
+                    currentPreview = AssetPreview.GetAssetPreview(AssetDatabaseUtils.LoadTargetAsset<Object>(previewAttribute.TexturePath));
                     bool useCustomMaterial = !string.IsNullOrEmpty(previewSettings.shaderPath);
                     currentMaterial = useCustomMaterial ? previewAttribute.GetMaterial() : UIDefault;
                     
@@ -113,7 +82,7 @@ namespace CippSharp.Core.Attributes
 
             public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
             {
-                if (this.attribute is PreviewAttribute previewAttribute && property.propertyType == SerializedPropertyType.ObjectReference)
+                if (this.attribute is PreviewCustomTextureAttribute previewAttribute)
                 {
                     Settings previewSettings = previewAttribute.PreviewSettings;
 
@@ -160,16 +129,6 @@ namespace CippSharp.Core.Attributes
                 {
                     EditorGUI.LabelField(position, label.text, "Invalid property or attribute!");
                 }
-            }
-
-            protected void DrawPreviewTexture(Rect unEditedRect, float measure, ScaleMode scaleMode)
-            {
-                Rect previewRect = unEditedRect;
-                previewRect.y += EditorGUIUtils.LineHeight;
-                previewRect.x = (previewRect.width * 0.5f) - (measure * 0.5f);
-                previewRect.width = measure;
-                previewRect.height = measure;
-                EditorGUI.DrawPreviewTexture(previewRect, currentPreview, currentMaterial, scaleMode);
             }
         }
 #endif

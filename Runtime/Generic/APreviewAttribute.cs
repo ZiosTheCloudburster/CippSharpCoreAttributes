@@ -1,14 +1,16 @@
-﻿using System;
-using UnityEngine;
-
+﻿
 namespace CippSharp.Core.Attributes
 {
+    using ScaleMode = UnityEngine.ScaleMode;
+    using Material = UnityEngine.Material;
+    using Shader = UnityEngine.Shader;
+    
     /// <summary>
     /// Abstract class for preview attributes. In this case custom editor are specific for each inherited class
     /// </summary>
     public abstract class APreviewAttribute : AFieldAttribute
     {
-        [Serializable]
+        [System.Serializable]
         public class Settings
         {
             public static readonly Settings Default = new Settings()
@@ -69,12 +71,13 @@ namespace CippSharp.Core.Attributes
         }
         
         #endregion
-        
+
+#if UNITY_EDITOR
         /// <summary>
-        /// Used by editor
+        /// Used by editor only
         /// </summary>
         public bool isExpanded = true;
-
-      
+#endif
+        
     }
 }
