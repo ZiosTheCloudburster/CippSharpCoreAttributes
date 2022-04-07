@@ -10,8 +10,10 @@ namespace CippSharp.Core.Attributes
     /// </summary>
     public abstract class APreviewAttribute : AFieldAttribute
     {
+        #region class Settings
+        
         [System.Serializable]
-        public class Settings
+        public class Settings : System.IEquatable<Settings>
         {
             public static readonly Settings Default = new Settings()
             {
@@ -47,7 +49,41 @@ namespace CippSharp.Core.Attributes
             {
                 
             }
+
+            #region Equality Members
+
+            public bool Equals(Settings other)
+            {
+                if (ReferenceEquals(null, other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return editable == other.editable && scaleMode == other.scaleMode && measure == other.measure && string.Equals(shaderPath, other.shaderPath) && foldable == other.foldable;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj)) return false;
+                if (ReferenceEquals(this, obj)) return true;
+                if (obj.GetType() != this.GetType()) return false;
+                return Equals((Settings) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashCode = editable.GetHashCode();
+                    hashCode = (hashCode * 397) ^ (int) scaleMode;
+                    hashCode = (hashCode * 397) ^ measure;
+                    hashCode = (hashCode * 397) ^ (shaderPath != null ? shaderPath.GetHashCode() : 0);
+                    hashCode = (hashCode * 397) ^ foldable.GetHashCode();
+                    return hashCode;
+                }
+            }
+            
+            #endregion
         }
+        
+        #endregion
         
         public Settings PreviewSettings { get; protected set; } = new Settings();
 
@@ -78,6 +114,5 @@ namespace CippSharp.Core.Attributes
         /// </summary>
         public bool isExpanded = true;
 #endif
-        
     }
 }

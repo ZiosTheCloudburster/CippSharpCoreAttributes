@@ -154,7 +154,13 @@ MonoBehaviour:
   propertyWithUglyName: 1
   tagSelector: Untagged
   sceneSelector: 
+  tooltip0: Previews the current field only. Basically any UnityEngine.Object supported
+    by AssetPreview.
   unityObject: {fileID: 2100000, guid: 1c65d8f1a3c72794dbd6464719d64647, type: 2}
+  tooltip1: Displays a custom texture under this field. Just pass the 'filter' to
+    search in AssetDatabase.
+  value: 45
+  withDecoratorObject: {fileID: 2100000, guid: 1c65d8f1a3c72794dbd6464719d64647, type: 2}
 --- !u!4 &9406080
 Transform:
   m_ObjectHideFlags: 0

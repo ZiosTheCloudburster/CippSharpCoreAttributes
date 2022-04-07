@@ -6,6 +6,7 @@ using Object = UnityEngine.Object;
 
 namespace CippSharp.Core.Attributes.Samples
 {
+#pragma warning disable 414
     internal class OtherAttributesSamples : MonoBehaviour
     {
         [Flags]
@@ -41,7 +42,7 @@ namespace CippSharp.Core.Attributes.Samples
         /// <summary>
         /// Previews the current field only
         /// </summary>
-        [Preview(true, ScaleMode.ScaleToFit, 128, "", true)] 
+        [Preview(true, true)] 
         public Object unityObject = null;
         
 
@@ -59,6 +60,17 @@ namespace CippSharp.Core.Attributes.Samples
         {
             Application.OpenURL("https://pixabay.com/illustrations/submarine-ocean-sea-underwater-7105870/");
         }
+
+        [Space(6)] 
+        private string tooltip2 = "Preview Decorator Attribute";
+        
+        /// <summary>
+        /// Previews the current field only
+        /// </summary>
+        [PreviewDecorator(nameof(withDecoratorObject), true, true)] 
+        public Object withDecoratorObject = null;
+
     }
+#pragma warning restore 414
 }
 #endif

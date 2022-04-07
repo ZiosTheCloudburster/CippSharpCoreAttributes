@@ -41,7 +41,7 @@ namespace CippSharp.Core.Attributes
 
         #region Custom Editor
 #if UNITY_EDITOR
-        [CustomPropertyDrawer(typeof(PreviewAttribute))]
+        [CustomPropertyDrawer(typeof(PreviewAttribute), false)]
         public class PreviewAttributeDrawer : PropertyDrawer
         {
             #region Default Material
@@ -72,8 +72,6 @@ namespace CippSharp.Core.Attributes
 
             protected Texture2D currentPreview = null;
             protected Material currentMaterial = null;
-            
-//            private float additionalHeight = 0;
 
             public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
             {
