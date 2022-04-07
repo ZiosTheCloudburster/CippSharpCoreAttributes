@@ -9,7 +9,7 @@ namespace CippSharp.Core.Attributes
     /// Well if you want the 'slider' use the <see cref="RangeAttribute"/> of unity!
     /// But if you only need to clamp a value without having 'range' from one side...
     /// </summary>
-    public abstract class AClampAttribute : AFieldAttribute
+    public abstract class AClampAttribute : ACustomPropertyAttribute
     {
         public int IntegerMinValue { get; protected set; } = 0;
         public float FloatMinValue { get; protected set; } = 0;

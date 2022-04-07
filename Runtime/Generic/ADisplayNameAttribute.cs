@@ -5,7 +5,7 @@ using UnityEditor;
 
 namespace CippSharp.Core.Attributes
 {
-    public abstract class ADisplayNameAttribute : AFieldAttribute
+    public abstract class ADisplayNameAttribute : ACustomPropertyAttribute
     {
         public enum Target : sbyte
         {

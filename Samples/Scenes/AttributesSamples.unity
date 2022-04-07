@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bitmaskDrawer: 5
+  minMaxDrawer: {x: -0.32989693, y: 0.628866}
   propertyWithUglyName: 1
   tagSelector: Untagged
   sceneSelector: 
@@ -160,6 +161,8 @@ MonoBehaviour:
   tooltip1: Displays a custom texture under this field. Just pass the 'filter' to
     search in AssetDatabase.
   value: 45
+  tooltip2: Preview Decorator Attributes. The Good thing of decorators is that you
+    can have multiple of them without affecting the drawing of the serialized property.
   withDecoratorObject: {fileID: 2100000, guid: 1c65d8f1a3c72794dbd6464719d64647, type: 2}
 --- !u!4 &9406080
 Transform:
@@ -500,7 +503,7 @@ MonoBehaviour:
   nestData1:
     printSomething: 0
   tooltip3: Example of ButtonDecorator
-  uselessCount: 1
+  uselessCount: 0
   thisIsMadness:
     ImThatCrazy: 0
     nestData1:

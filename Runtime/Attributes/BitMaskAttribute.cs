@@ -12,7 +12,7 @@ namespace CippSharp.Core.Attributes
     /// <summary>
     /// Class BitMaskField Attribute.
     /// </summary>
-    public class BitMaskAttribute : AFieldAttribute
+    public class BitMaskAttribute : ACustomPropertyAttribute
     {
         #region Custom Editor
 #if UNITY_EDITOR

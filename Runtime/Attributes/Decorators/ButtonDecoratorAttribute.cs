@@ -18,8 +18,13 @@ namespace CippSharp.Core.Attributes
     /// well you'll gather what you sow 
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true, Inherited = true)]
-    public class ButtonDecoratorAttribute : AFieldAttribute
+    public class ButtonDecoratorAttribute : ACustomPropertyAttribute
     {
+        /// <summary>
+        /// Ensure a more specific pair.
+        /// </summary>
+        public string FieldNameOrIdentifier { get; protected set; } = string.Empty;
+        
         /// <summary>
         /// Horizontal Layout of buttons
         /// </summary>
@@ -38,8 +43,9 @@ namespace CippSharp.Core.Attributes
             
         }
         
-        public ButtonDecoratorAttribute(string name, string callback, GUIButtonStyle style = GUIButtonStyle.MiniButton) : this ()
+        public ButtonDecoratorAttribute(string fieldName, string name, string callback, GUIButtonStyle style = GUIButtonStyle.MiniButton) : this ()
         {
+            this.FieldNameOrIdentifier = fieldName;
             this.Pairs[name] = callback;
             this.GraphicStyle = style;
         }
@@ -47,19 +53,22 @@ namespace CippSharp.Core.Attributes
         /// <summary>
         /// USAGE: Pair Format Template "DisplayName, Callback"
         /// </summary>
+        /// <param name="fieldName"></param>
         /// <param name="style"></param>
         /// <param name="pairs"></param>
-        public ButtonDecoratorAttribute(GUIButtonStyle style, params string[] pairs) : this(pairs)
+        public ButtonDecoratorAttribute(string fieldName, GUIButtonStyle style, params string[] pairs) : this(fieldName, pairs)
         {
             this.GraphicStyle = style;
         }
-
+        
         /// <summary>
         /// USAGE: Pair Format Template "DisplayName, Callback"
         /// </summary>
+        /// <param name="fieldName"></param>
         /// <param name="pairs"></param>
-        public ButtonDecoratorAttribute(params string[] pairs) : this ()
+        public ButtonDecoratorAttribute(string fieldName, params string[] pairs) : this ()
         {
+            this.FieldNameOrIdentifier = fieldName;
             if (!ArrayUtils.IsNullOrEmpty(pairs))
             {
                 foreach (var pair in pairs)
@@ -76,6 +85,54 @@ namespace CippSharp.Core.Attributes
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Used by attribute predicate in editor
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool HasSameValues(ButtonDecoratorAttribute other)
+        {
+            if (this.FieldNameOrIdentifier != other.FieldNameOrIdentifier)
+            {
+                return false;
+            }
+           
+            if (this.GraphicStyle != other.GraphicStyle)
+            {
+                return false;
+            }
+
+            int count = this.Pairs.Count;
+            //Avoid empty iterations
+            if (count <= 0)
+            {
+                return false;
+            }
+            
+            if (count != other.Pairs.Count)
+            {
+                return false;
+            }
+
+            var array = this.Pairs.ToArray();
+            var otherArray = other.Pairs.ToArray();
+            bool all = true;
+            for (int i = 0; i < count; i++)
+            {
+                var element = array[i];
+                var otherElement = otherArray[i];
+                if (element.Key == otherElement.Key && element.Value == otherElement.Value)
+                {
+                    continue;
+                }
+
+                all = false;
+                break;
+            }
+
+            return all;
         }
         
 #if UNITY_EDITOR
@@ -126,10 +183,12 @@ namespace CippSharp.Core.Attributes
 
             private void OnClickCallback(string callback)
             {
+                ButtonDecoratorAttribute buttonDecoratorAttribute = (ButtonDecoratorAttribute)attribute;
                 DecoratorDrawersUtils.IteratePropertiesWithAttribute<ButtonDecoratorAttribute>(AttributePredicate, CheckDelegate);
                 bool AttributePredicate(ButtonDecoratorAttribute c)
                 {
-                    return c.Pairs.ContainsValue(callback);
+                    return buttonDecoratorAttribute.HasSameValues(c);
+                    // && c.Pairs.ContainsValue(callback);
                 }
                 void CheckDelegate(Object target, SerializedObject serializedObject, SerializedProperty[] properties)
                 {

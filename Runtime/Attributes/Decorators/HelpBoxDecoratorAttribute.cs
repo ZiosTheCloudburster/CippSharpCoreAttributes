@@ -11,7 +11,7 @@ namespace CippSharp.Core.Attributes
     using MessageType = AHelpBoxAttribute.MessageType;
     
     [System.AttributeUsage(System.AttributeTargets.Field, AllowMultiple = true, Inherited = true)]
-    public class HelpBoxDecoratorAttribute : AFieldAttribute, System.IEquatable<HelpBoxDecoratorAttribute>
+    public class HelpBoxDecoratorAttribute : ACustomPropertyAttribute, System.IEquatable<HelpBoxDecoratorAttribute>
     {
         public string FieldNameOrIdentifier { get; protected set; } = string.Empty;
         

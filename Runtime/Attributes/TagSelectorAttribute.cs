@@ -13,7 +13,7 @@ using UnityEditor;
 namespace CippSharp.Core.Attributes
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
-    public class TagSelectorAttribute : AFieldAttribute
+    public class TagSelectorAttribute : ACustomPropertyAttribute
     {
         public bool UseDefaultTagFieldDrawer { get; protected set; } = false;
 

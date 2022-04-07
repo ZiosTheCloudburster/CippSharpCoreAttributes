@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace CippSharp.Core.Attributes
 {
-    public abstract class AHelpBoxAttribute : AFieldAttribute
+    public abstract class AHelpBoxAttribute : ACustomPropertyAttribute
     {
         public enum ShowOptions : byte
         {

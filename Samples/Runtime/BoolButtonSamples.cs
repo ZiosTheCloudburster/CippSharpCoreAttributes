@@ -52,8 +52,8 @@ namespace CippSharp.Core.Attributes.Samples
         [Serializable]
         public class Madness0
         {
-            [ButtonDecorator("Print if I'm Crazy", nameof(PrintYes))]
-            [ButtonDecorator(new []{"I don't know,"+nameof(PrintYes)})]
+            [ButtonDecorator(nameof(ImThatCrazy), "Print if I'm Crazy", nameof(PrintYes))]
+            [ButtonDecorator(nameof(ImThatCrazy), new []{"I don't know,"+nameof(PrintYes)})]
             public bool ImThatCrazy = false;
 
             [Space(10)]
@@ -95,7 +95,7 @@ namespace CippSharp.Core.Attributes.Samples
         
         [Space(6)]
         public string tooltip3 = "Example of ButtonDecorator";
-        [ButtonDecorator(new []{"Decrease (-),"+nameof(DecreaseUselessCount), "Increase (+),"+nameof(IncreaseUselessCount)})]
+        [ButtonDecorator(nameof(uselessCount), new []{"Decrease (-),"+nameof(DecreaseUselessCount), "Increase (+),"+nameof(IncreaseUselessCount)})]
         public int uselessCount = 0;
 
         private void IncreaseUselessCount()

@@ -21,6 +21,9 @@ namespace CippSharp.Core.Attributes.Samples
         //BitMask drawer
         [BitMask]
         public FlagExample bitmaskDrawer = FlagExample.Option1;
+        
+        [MinMax(-1, 1)]
+        public Vector2 minMaxDrawer = new Vector2(0, 1);
 
         //Display name drawer
         [Space(6)] 
@@ -53,7 +56,7 @@ namespace CippSharp.Core.Attributes.Samples
         /// Displays a custom texture under this field 
         /// </summary>
         [PreviewCustomTexture("AttributesSamplesSubmarine720 t:Texture2D")]
-        [ButtonDecorator("Open Image Url", nameof(OpenImageUrl))]
+        [ButtonDecorator(nameof(value), "Open Image Url", nameof(OpenImageUrl))]
         public float value = 45;
 
         void OpenImageUrl()
@@ -62,12 +65,14 @@ namespace CippSharp.Core.Attributes.Samples
         }
 
         [Space(6)] 
-        private string tooltip2 = "Preview Decorator Attribute";
+        [TextArea(1, 3)]
+        public string tooltip2 = "Preview Decorator Attributes. The Good thing of decorators is that you can have multiple of them without affecting the drawing of the serialized property.";
         
         /// <summary>
         /// Previews the current field only
         /// </summary>
-        [PreviewDecorator(nameof(withDecoratorObject), true, true)] 
+        [PreviewDecorator(nameof(withDecoratorObject), true, true)]
+        [PreviewCustomTextureDecorator(nameof(withDecoratorObject), "AttributesSamplesSubmarine720 t:Texture2D")]
         public Object withDecoratorObject = null;
 
     }

@@ -7,7 +7,7 @@ using Object = UnityEngine.Object;
 
 namespace CippSharp.Core.Attributes
 {
-    public class ClampValueDecoratorAttribute : AFieldAttribute, System.IEquatable<ClampValueDecoratorAttribute>
+    public class ClampValueDecoratorAttribute : ACustomPropertyAttribute, System.IEquatable<ClampValueDecoratorAttribute>
     {
         public enum Behaviour : sbyte
         {

@@ -1,9 +1,12 @@
 ﻿
-namespace CippSharp.Core
+namespace CippSharp.Core.Attributes
 {
+    /// <summary>
+    /// Min Max Attribute
+    /// </summary>
     public class MinMaxAttribute : AMinMaxAttribute
     {
-        public MinMaxAttribute()
+        protected MinMaxAttribute()
         {
             
         }

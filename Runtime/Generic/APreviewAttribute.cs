@@ -8,7 +8,7 @@ namespace CippSharp.Core.Attributes
     /// <summary>
     /// Abstract class for preview attributes. In this case custom editor are specific for each inherited class
     /// </summary>
-    public abstract class APreviewAttribute : AFieldAttribute
+    public abstract class APreviewAttribute : ACustomPropertyAttribute
     {
         #region class Settings
         

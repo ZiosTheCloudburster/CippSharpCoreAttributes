@@ -1,20 +1,23 @@
 ﻿#if UNITY_2019_4_OR_NEWER
-using System;
+#if UNITY_EDITOR
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
+#endif
 
 namespace CippSharp.Core.Attributes
 {
+    using ScaleMode = UnityEngine.ScaleMode;
+    using Material = UnityEngine.Material;
+    using Shader = UnityEngine.Shader;
     using Settings = APreviewAttribute.Settings;
     
     /// <summary>
     /// Displays a TexturePreview of the item, before the 'field'.
     /// </summary>
     [System.AttributeUsage(System.AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
-    public class PreviewDecoratorAttribute : AFieldAttribute
-//        , IEquatable<PreviewDecoratorAttribute>
+    public class PreviewDecoratorAttribute : ACustomPropertyAttribute
     {
         public string FieldNameOrIdentifier { get; protected set; } = string.Empty;
 
@@ -84,36 +87,6 @@ namespace CippSharp.Core.Attributes
             };
         }
         
-//        #region Equality Members
-//
-//        public bool Equals(PreviewDecoratorAttribute other)
-//        {
-//            if (ReferenceEquals(null, other)) return false;
-//            if (ReferenceEquals(this, other)) return true;
-//            return base.Equals(other) && string.Equals(FieldNameOrIdentifier, other.FieldNameOrIdentifier) && Equals(PreviewSettings, other.PreviewSettings);
-//        }
-//
-//        public override bool Equals(object obj)
-//        {
-//            if (ReferenceEquals(null, obj)) return false;
-//            if (ReferenceEquals(this, obj)) return true;
-//            if (obj.GetType() != this.GetType()) return false;
-//            return Equals((PreviewDecoratorAttribute) obj);
-//        }
-//
-//        public override int GetHashCode()
-//        {
-//            unchecked
-//            {
-//                int hashCode = base.GetHashCode();
-//                hashCode = (hashCode * 397) ^ (FieldNameOrIdentifier != null ? FieldNameOrIdentifier.GetHashCode() : 0);
-//                hashCode = (hashCode * 397) ^ (PreviewSettings != null ? PreviewSettings.GetHashCode() : 0);
-//                return hashCode;
-//            }
-//        }
-//
-//        #endregion
-
         #region Custom Editor
 #if UNITY_EDITOR
         [CustomPropertyDrawer(typeof(PreviewDecoratorAttribute))]
@@ -220,13 +193,6 @@ namespace CippSharp.Core.Attributes
                         {
                             EditorGUI.indentLevel++;
                             Rect foldoutRect = position;
-//                            foldoutRect.y = position.height - EditorGUIUtils.LineHeight;
-//                            foldoutRect.height = EditorGUIUtils.SingleLineHeight;
-                            
-                            var c = GUI.color;
-//                            GUI.color = Color.green;
-//                            GUI.Box(foldoutRect, Texture2D.whiteTexture);
-//                            GUI.color = c;
                             foldoutRect.height = EditorGUIUtils.SingleLineHeight;
                             previewDecoratorAttribute.isExpanded = EditorGUI.Foldout(foldoutRect, previewDecoratorAttribute.isExpanded, "Preview");
                             
@@ -237,14 +203,6 @@ namespace CippSharp.Core.Attributes
                                 unEditedRect.y += EditorGUIUtils.LineHeight;
                                 DrawPreviewTexture(unEditedRect, previewSettings.measure, previewSettings.scaleMode);
                                 EditorGUI.indentLevel--;
-
-//                                foldoutRect.y += previewSettings.measure + EditorGUIUtils.VerticalSpacing; 
-//                                foldoutRect.height = EditorGUIUtils.SingleLineHeight;
-//                                previewDecoratorAttribute.isExpanded = EditorGUI.Foldout(foldoutRect, previewDecoratorAttribute.isExpanded, "Preview");
-                            }
-                            else
-                            {
-                                                 
                             }
                             EditorGUI.indentLevel--;
                         }

@@ -14,7 +14,7 @@ namespace CippSharp.Core.Attributes
     /// <summary>
     /// Displays a bool field as a button.
     /// </summary>
-    public abstract class ABoolButtonAttribute : AFieldAttribute
+    public abstract class ABoolButtonAttribute : ACustomPropertyAttribute
     {
         public enum Behaviour
         {

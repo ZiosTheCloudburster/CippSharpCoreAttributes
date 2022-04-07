@@ -7,7 +7,7 @@ namespace CippSharp.Core.Attributes
     /// Base class to derive custom property attributes from. Use this to create custom attributes for script variables.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
-    public abstract class AFieldAttribute : PropertyAttribute
+    public abstract class ACustomPropertyAttribute : PropertyAttribute
     {
        
     }
