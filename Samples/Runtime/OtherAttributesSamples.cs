@@ -75,6 +75,11 @@ namespace CippSharp.Core.Attributes.Samples
         [PreviewCustomTextureDecorator(nameof(withDecoratorObject), "AttributesSamplesSubmarine720 t:Texture2D")]
         public Object withDecoratorObject = null;
 
+        [BeginColorDecorator(1, 0, 0, 0.5f)]
+        public string highlightSample = "";
+        [BeginColorDecorator(0, 1, 1, 0.5f)]
+        public bool something = false;
+
     }
 #pragma warning restore 414
 }

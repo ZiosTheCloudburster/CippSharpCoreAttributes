@@ -164,6 +164,7 @@ MonoBehaviour:
   tooltip2: Preview Decorator Attributes. The Good thing of decorators is that you
     can have multiple of them without affecting the drawing of the serialized property.
   withDecoratorObject: {fileID: 2100000, guid: 1c65d8f1a3c72794dbd6464719d64647, type: 2}
+  highlightSample: Red string
 --- !u!4 &9406080
 Transform:
   m_ObjectHideFlags: 0
