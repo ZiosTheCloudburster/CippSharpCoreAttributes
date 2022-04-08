@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Debug = UnityEngine.Debug;
 
 namespace CippSharp.Core.Attributes
 {
-    using Array = System.Array;
-    using Exception = System.Exception;
-    using Debug = UnityEngine.Debug;
-    
     /// <summary>
     /// Hold static helpful methods for arrays.
     /// This part is dedicated to topmost generic arrays methods
     /// </summary>
-    public static partial class ArrayUtils
+    internal static class ArrayUtils
     {
         /// <summary>
         /// Retrieve if context object is an array.
@@ -138,40 +135,6 @@ namespace CippSharp.Core.Attributes
 
         #endregion
         
-         #region Add
-
-        /// <summary>
-        /// Add an element to a list only if it is new
-        /// </summary>
-        /// <param name="list"></param>
-        /// <param name="element"></param>
-        /// <typeparam name="T"></typeparam>
-        public static void AddIfNew<T>(List<T> list, T element)
-        {
-            if (!list.Contains(element))
-            {
-                list.Add(element);
-            }
-        }
-
-        #endregion
-
-        #region Clear
-
-        /// <summary>
-        /// Clear not null elements from an enumerable
-        /// </summary>
-        /// <param name="enumerable"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        [Obsolete("2021/08/14 → Use SelectNotNullElements instead. This will be removed in future versions.")]
-        public static IEnumerable<T> ClearNullEntries<T>(IEnumerable<T> enumerable) where T : class
-        {
-            return SelectNotNullElements(enumerable);
-        }
-
-        #endregion
-
         #region Contains / Find
         
         /// <summary>
@@ -202,31 +165,6 @@ namespace CippSharp.Core.Attributes
         {
             index = IndexOf(array, predicate);
             return index > -1;
-        }
-        
-        /// <summary>
-        /// Find Method
-        /// </summary>
-        /// <param name="collection"></param>
-        /// <param name="predicate"></param>
-        /// <param name="result"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static bool Find<T>(ICollection<T> collection, Predicate<T> predicate, out T result)
-        {
-            foreach (var element in collection)
-            {
-                if (!predicate.Invoke(element))
-                {
-                    continue;
-                }
-                
-                result = element;
-                return true;
-            }
-            
-            result = default;
-            return false;
         }
 
         #endregion
@@ -390,77 +328,6 @@ namespace CippSharp.Core.Attributes
         }
         
         #endregion
-
-        #region Random Element
-
-        /// <summary>
-        /// Retrieve a random element in array.
-        /// </summary>
-        /// <param name="array"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static T RandomElement<T>(T[] array)
-        {
-            int index = UnityEngine.Random.Range(0, array.Length);
-            return array[index];
-        }
-        
-        /// <summary>
-        /// Retrieve a random element in list.
-        /// </summary>
-        /// <param name="list"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static T RandomElement<T>(List<T> list)
-        {
-            int index = UnityEngine.Random.Range(0, list.Count);
-            return list[index];
-        }
-
-        #endregion
-        
-        #region Remove Element
-
-        /// <summary>
-        /// Remove an array element at the given index and retrieve the resulting array.
-        /// </summary>
-        /// <param name="array"></param>
-        /// <param name="index"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static void RemoveAt<T>(ref T[] array, int index)
-        {
-            array = array.Where((e, i) => i != index).ToArray();
-        }
-        
-        /// <summary>
-        /// Remove an element from array.
-        /// </summary>
-        /// <param name="array"></param>
-        /// <param name="element"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static T[] Remove<T>(T[] array, T element)
-        {
-            return array.Where(e => (e.Equals(element) == false)).ToArray();
-        }
-        
-        /// <summary>
-        /// Remove from a list by predicate
-        /// </summary>
-        /// <param name="list"></param>
-        /// <param name="predicate"></param>
-        /// <typeparam name="T"></typeparam>
-        public static void Remove<T>(List<T> list, Predicate<T> predicate)
-        {
-            int index = IndexOf(list, predicate);
-            if (index > -1)
-            {
-                list.RemoveAt(index);
-            }
-        }
-
-        #endregion
         
         #region Select
 
@@ -562,44 +429,6 @@ namespace CippSharp.Core.Attributes
         }
         
         #endregion
-
-        #region Take
-
-        /// <summary>
-        /// Take until count!
-        /// If there aren't enough elements only the few (less than count) are returned.
-        /// </summary>
-        /// <param name="collection"></param>
-        /// <param name="count"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static IEnumerable<T> TakeUntil<T>(IEnumerable<T> collection, int count)
-        {
-            return collection.Count() <= count ? collection : collection.Take(count);
-        }
-
-        #endregion
         
-//        /// <summary>
-//        /// Try to cast a generic Array to object[]
-//        /// </summary>
-//        /// <param name="value"></param>
-//        /// <param name="array"></param>
-//        /// <returns>success</returns>
-//        public static bool TryCast(Array value, out object[] array)
-//        {
-//            try
-//            {
-//                array = (value).Cast<object>().ToArray();
-//                return true;
-//            }
-//            catch (Exception e)
-//            {
-//                Debug.LogError(e.Message);
-//                array = null;
-//                return false;
-//            }
-//        }
-//        
     }
 }

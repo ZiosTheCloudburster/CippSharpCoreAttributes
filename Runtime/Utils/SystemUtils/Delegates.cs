@@ -1,4 +1,4 @@
-﻿namespace CippSharp.Core
+﻿namespace CippSharp.Core.Attributes
 {
     /// <summary>
     /// Same as System.Action'T' but with 'ref'
