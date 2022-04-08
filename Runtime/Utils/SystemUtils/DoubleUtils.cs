@@ -13,26 +13,26 @@ namespace CippSharp.Core
             return value * (perc / 100.0000f);
         }
 
-        /// <summary>
-        /// Retrieve a clamped double
-        /// </summary>
-        /// <param name="input"></param>
-        /// <param name="min"></param>
-        /// <param name="max"></param>
-        /// <returns></returns>
-        public static double Clamp(double input, double min, double max)
-        {
-            if (input < min)
-            {
-                input = min;
-            }
-
-            if (input > max)
-            {
-                input = max;
-            }
-
-            return input;
-        }
+//        /// <summary>
+//        /// Retrieve a clamped double
+//        /// </summary>
+//        /// <param name="input"></param>
+//        /// <param name="min"></param>
+//        /// <param name="max"></param>
+//        /// <returns></returns>
+//        public static double Clamp(double input, double min, double max)
+//        {
+//            if (input < min)
+//            {
+//                input = min;
+//            }
+//
+//            if (input > max)
+//            {
+//                input = max;
+//            }
+//
+//            return input;
+//        }
     }
 }

@@ -69,40 +69,6 @@ namespace CippSharp.Core
         {
             return GetAllProperties(serializedObject).Where(p => p.propertyType == type).ToArray();
         }
-
-//        public static SerializedProperty[] GetPropertiesWithAttribute<T>(SerializedObject serializedObject)
-//        {
-//            
-//        }
-
-//        private static void GetPotentialContainersOfCallbackRecursive(SerializedProperty[] candidates, ref List<SerializedProperty> storage, string callback)
-//        {
-//            for (int i = 0; i < candidates.Length; i++)
-//            {
-//                SerializedProperty property = candidates[i];
-//                if (!property.isExpanded)
-//                {
-//                    continue;
-//                }
-//                if (!property.hasChildren)
-//                {
-//                    continue;
-//                }
-//                
-//                MirroredScriptAttributeUtility.GetFieldInfoFromProperty()
-//                
-//                var genericChildren = GetChildren(property);
-//            }
-//        }
-//
-//        private static bool IsPotentialContainerOfCallback(SerializedProperty property)
-//        {
-//            
-//        }
-//       
-        
-        
-        
         
         /// <summary>
         /// Retrieve a serialized property that is an array as an array of serialized properties.

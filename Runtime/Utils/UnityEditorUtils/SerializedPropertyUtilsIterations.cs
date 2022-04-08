@@ -12,7 +12,7 @@ namespace CippSharp.Core
         /// </summary>
         /// <param name="property"></param>
         /// <returns></returns>
-        public static IEnumerable<SerializedProperty> GetChildren(this SerializedProperty property)
+        public static IEnumerable<SerializedProperty> GetChildren(SerializedProperty property)
         {
             property = property.Copy();
             var nextElement = property.Copy();

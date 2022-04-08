@@ -86,26 +86,26 @@ namespace CippSharp.Core
             }
         }
         
-        /// <summary>
-        /// Try to cast a generic Array to object[]
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="array"></param>
-        /// <returns>success</returns>
-        public static bool TryCast(Array value, out object[] array)
-        {
-            try
-            {
-                array = (value).Cast<object>().ToArray();
-                return true;
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e.Message);
-                array = null;
-                return false;
-            }
-        }
-        
+//        /// <summary>
+//        /// Try to cast a generic Array to object[]
+//        /// </summary>
+//        /// <param name="value"></param>
+//        /// <param name="array"></param>
+//        /// <returns>success</returns>
+//        public static bool TryCast(Array value, out object[] array)
+//        {
+//            try
+//            {
+//                array = (value).Cast<object>().ToArray();
+//                return true;
+//            }
+//            catch (Exception e)
+//            {
+//                Debug.LogError(e.Message);
+//                array = null;
+//                return false;
+//            }
+//        }
+//        
     }
 }
