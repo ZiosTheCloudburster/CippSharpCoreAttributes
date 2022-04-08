@@ -10,10 +10,12 @@ namespace CippSharp.Core.Attributes
     /// <summary>
     /// Purpose: redraws the property and calls the methods if EditorGUI.EndChangeCheck was called.
     ///
-    /// Usage: use this to do checks or ensure that a property is correctly updated.
+    /// Usage: use this to do assert that a property is correctly updated.
     /// If you'd like to print some messages or not.
+    ///
+    /// Warning: property editing is not allowed.
     /// </summary>
-    public class ValidateAttribute : AValidatePropertyAttribute
+    public class AssertAttribute : AValidatePropertyAttribute
     {
         /// <summary>
         /// Method's return type can be of bool type
@@ -29,12 +31,12 @@ namespace CippSharp.Core.Attributes
 
         public MessageType MessageType { get; protected set; }
 
-        protected ValidateAttribute()
+        protected AssertAttribute()
         {
             
         }
 
-        public ValidateAttribute(string methodName, string message = "", MessageType messageType = MessageType.Info)
+        public AssertAttribute(string methodName, string message = "", MessageType messageType = MessageType.Info)
             : this()
         {
             this.MethodName = methodName;
@@ -44,7 +46,7 @@ namespace CippSharp.Core.Attributes
 
         #region Custom Editor
 #if UNITY_EDITOR
-        [CustomPropertyDrawer(typeof(ValidateAttribute))]
+        [CustomPropertyDrawer(typeof(AssertAttribute))]
         public class ValidateAssertionAttributeDrawer : PropertyDrawer
         {
             public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
@@ -54,8 +56,8 @@ namespace CippSharp.Core.Attributes
 
             public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
             {
-                ValidateAttribute validateAttribute = attribute as ValidateAttribute;
-                if (validateAttribute == null)
+                AssertAttribute assertAttribute = attribute as AssertAttribute;
+                if (assertAttribute == null)
                 {
                     EditorGUI.LabelField(position, label.text, "Invalid attribute.");
                 }
@@ -66,14 +68,11 @@ namespace CippSharp.Core.Attributes
                     EditorGUIUtils.DrawProperty(position, property, label);
                     if (EditorGUI.EndChangeCheck())
                     {
-                        if (validateAttribute is ValidateAttribute v)
+                        if (!string.IsNullOrEmpty(assertAttribute.MethodName))
                         {
-                            if (!string.IsNullOrEmpty(v.MethodName))
+                            if (SerializedPropertyUtils.TryEditLastParentLevel(property, (ref object o) => Callback(ref o, assertAttribute)))
                             {
-                                if (SerializedPropertyUtils.TryEditLastParentLevel(property, (ref object o) => Callback(ref o, v)))
-                                {
                                     
-                                }
                             }
                         }
                     }
@@ -82,10 +81,10 @@ namespace CippSharp.Core.Attributes
                 }
             }
 
-            private void Callback(ref object context, ValidateAttribute validateAttribute)
+            private void Callback(ref object context, AssertAttribute assertAttribute)
             {
                 MethodInfo methodInfo = null;
-                string methodName = validateAttribute.MethodName;
+                string methodName = assertAttribute.MethodName;
                 object fieldValue = fieldInfo.GetValue(context);
 
                 if (ReflectionUtils.HasMethod(context, methodName, out methodInfo))
@@ -102,7 +101,7 @@ namespace CippSharp.Core.Attributes
 
                             if (!b)
                             {
-                                LogMessageFromAttribute(context, validateAttribute);
+                                LogMessageFromAttribute(context, assertAttribute);
                             }
                         }
                     }
@@ -117,7 +116,7 @@ namespace CippSharp.Core.Attributes
 
                             if (!b)
                             {
-                                LogMessageFromAttribute(context, validateAttribute);
+                                LogMessageFromAttribute(context, assertAttribute);
                             }
                         }
                     }
@@ -128,9 +127,9 @@ namespace CippSharp.Core.Attributes
                 }
             }
 
-            private void LogMessageFromAttribute(object context, ValidateAttribute validateAttribute)
+            private void LogMessageFromAttribute(object context, AssertAttribute assertAttribute)
             {
-                string message = validateAttribute.Message;
+                string message = assertAttribute.Message;
                 if (string.IsNullOrEmpty(message))
                 {
                     return;
@@ -139,7 +138,7 @@ namespace CippSharp.Core.Attributes
                 string logName = StringUtils.LogName(context);
                 Object @object = context as UnityEngine.Object;
                 
-                switch (validateAttribute.MessageType)
+                switch (assertAttribute.MessageType)
                 {
                     case MessageType.Info:
                         Debug.Log(logName + message, @object);

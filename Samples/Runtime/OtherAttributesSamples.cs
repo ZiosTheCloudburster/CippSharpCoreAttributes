@@ -38,6 +38,35 @@ namespace CippSharp.Core.Attributes.Samples
         [SceneSelector]
         public string sceneSelector = "";
 
+        #region Validate Attribute
+
+        [Space(6)]
+        [TextArea(1, 3)] 
+        public string tooltip = "Validate Attribute. \"This value cannot go over 2\" assertion. \nEmpty should be empty!";
+
+        
+        [Assert(nameof(CheckOnValidateValue), "onValidateValue should not go over 2. But if you want to clamp it use the ClampValueAttribute or Decorator.", MessageType.Warning)]
+        public float onValidateValue = 1;
+
+        private bool CheckOnValidateValue()
+        {
+            return onValidateValue < 2;
+        }
+       
+        [Assert(nameof(IsEmptyEmpty))]
+        public string empty = "";
+
+        //Another way to assert.
+        private void IsEmptyEmpty()
+        {
+            if (!string.IsNullOrEmpty(empty))
+            {
+                Debug.LogError("Empty is not Empty!");
+            }
+        }
+        
+        #endregion
+
         [Space(16)] 
         [TextArea(1, 3)] 
         public string tooltip0 = "Previews the current field only. Basically any UnityEngine.Object supported by AssetPreview.";
