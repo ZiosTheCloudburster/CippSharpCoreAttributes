@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = System.Object;
 
-namespace CippSharp.Core
+namespace CippSharp.Core.Attributes
 {
     public static partial class SerializedPropertyUtils
     {

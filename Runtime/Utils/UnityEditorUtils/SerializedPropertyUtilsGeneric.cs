@@ -5,7 +5,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace CippSharp.Core
+namespace CippSharp.Core.Attributes
 {
 	/// <summary>
 	/// Holds generics 'get-set' of value of a SerializedProperty

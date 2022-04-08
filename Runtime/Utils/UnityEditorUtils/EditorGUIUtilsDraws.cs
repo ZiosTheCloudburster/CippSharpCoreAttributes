@@ -5,8 +5,10 @@ using CippSharp.Core.Attributes.Extensions;
 using UnityEditor;
 using UnityEngine;
 
-namespace CippSharp.Core
+namespace CippSharp.Core.Attributes
 {
+    using UnityMessageType = UnityEditor.MessageType;
+    
     /// <summary>
     ///
     /// 20201/08/14 → Added 'by refs' methods to reduce memory heaps
@@ -216,7 +218,7 @@ namespace CippSharp.Core
         /// <param name="rect"></param>
         /// <param name="text"></param>
         /// <param name="messageType"></param>
-        public static void DrawHelpBox(Rect rect, string text, MessageType messageType = MessageType.Info)
+        public static void DrawHelpBox(Rect rect, string text, UnityMessageType messageType = UnityMessageType.Info)
         {
             EditorGUI.HelpBox(rect, text, messageType);
         }
@@ -228,7 +230,7 @@ namespace CippSharp.Core
         /// <param name="rect"></param>
         /// <param name="text"></param>
         /// <param name="messageType"></param>
-        public static void DrawHelpBox(ref Rect rect, ref string text, ref MessageType messageType)
+        public static void DrawHelpBox(ref Rect rect, ref string text, ref UnityMessageType messageType)
         {
             EditorGUI.HelpBox(rect, text, messageType);
         }
@@ -240,7 +242,7 @@ namespace CippSharp.Core
         /// <param name="helpBoxMessage"></param>
         /// <param name="textHeight">The computed height of the description.</param>
         /// <param name="messageType"></param>
-        public static void DrawHelpBox(Rect inputRect, string helpBoxMessage, out float textHeight, MessageType messageType = MessageType.Info)
+        public static void DrawHelpBox(Rect inputRect, string helpBoxMessage, out float textHeight, UnityMessageType messageType = UnityMessageType.Info)
         {
             DrawHelpBox(ref inputRect, ref helpBoxMessage, out textHeight, ref messageType);
         }
@@ -252,7 +254,7 @@ namespace CippSharp.Core
         /// <param name="helpBoxMessage"></param>
         /// <param name="textHeight">The computed height of the description.</param>
         /// <param name="messageType"></param>
-        public static void DrawHelpBox(ref Rect inputRect, ref string helpBoxMessage, out float textHeight, ref MessageType messageType)
+        public static void DrawHelpBox(ref Rect inputRect, ref string helpBoxMessage, out float textHeight, ref UnityMessageType messageType)
         {
             GUIStyle style = EditorStyles.helpBox;
             GUIContent descriptionWrapper = new GUIContent(helpBoxMessage);

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 
-namespace CippSharp.Core
+namespace CippSharp.Core.Attributes
 {
     public static partial class SerializedPropertyUtils
     {

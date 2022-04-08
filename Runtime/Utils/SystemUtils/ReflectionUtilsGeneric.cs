@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-namespace CippSharp.Core
+namespace CippSharp.Core.Attributes
 {
     public static partial class ReflectionUtils
     {

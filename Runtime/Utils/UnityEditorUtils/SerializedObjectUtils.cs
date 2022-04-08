@@ -4,7 +4,7 @@ using CippSharp.Core;
 using UnityEditor;
 using UnityEngine;
 
-namespace CippSharp.Core
+namespace CippSharp.Core.Attributes
 {
     public static class SerializedObjectUtils
     {

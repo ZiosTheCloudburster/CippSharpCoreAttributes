@@ -4,8 +4,10 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace CippSharp.Core
+namespace CippSharp.Core.Attributes
 {
+	using UnityMessageType = UnityEditor.MessageType;
+	
     public static partial class EditorGUILayoutUtils
     {
 	    #region Draw Array
@@ -234,7 +236,7 @@ namespace CippSharp.Core
 		{
 			if (!string.IsNullOrEmpty(text))
 			{
-				EditorGUILayout.HelpBox(text, MessageType.Info);
+				EditorGUILayout.HelpBox(text, UnityMessageType.Info);
 			}
 		}
 		
@@ -246,7 +248,7 @@ namespace CippSharp.Core
 		{
 			if (!string.IsNullOrEmpty(text))
 			{
-				EditorGUILayout.HelpBox(text, MessageType.Warning);
+				EditorGUILayout.HelpBox(text, UnityMessageType.Warning);
 			}
 		}
 
@@ -258,7 +260,7 @@ namespace CippSharp.Core
 		{
 			if (!string.IsNullOrEmpty(text))
 			{
-				EditorGUILayout.HelpBox(text, MessageType.Error);
+				EditorGUILayout.HelpBox(text, UnityMessageType.Error);
 			}
 		}
 
