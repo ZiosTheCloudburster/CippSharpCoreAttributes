@@ -2,7 +2,7 @@
 
 namespace CippSharp.Core.Attributes.Extensions
 {
-    public static class ReflectionExtensions
+    internal static class ReflectionExtensions
     {
         /// <summary>
         /// Is field info

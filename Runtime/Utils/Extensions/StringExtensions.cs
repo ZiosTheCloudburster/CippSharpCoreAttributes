@@ -4,7 +4,7 @@
 
 namespace CippSharp.Core.Attributes.Extensions
 {
-    public static class StringExtensions
+    internal static class StringExtensions
     {
        #region Replacement
         
