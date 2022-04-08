@@ -1,8 +1,6 @@
 ﻿
 namespace CippSharp.Core.Attributes
 {
-    using MessageType = AHelpBoxAttribute.MessageType;
-
     public class ErrorBoxDecoratorAttribute : HelpBoxDecoratorAttribute
     {
         protected ErrorBoxDecoratorAttribute()

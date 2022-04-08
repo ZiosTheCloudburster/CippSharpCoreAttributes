@@ -8,8 +8,6 @@ using UnityEngine;
 
 namespace CippSharp.Core.Attributes
 {
-    using MessageType = AHelpBoxAttribute.MessageType;
-    
     [System.AttributeUsage(System.AttributeTargets.Field, AllowMultiple = true, Inherited = true)]
     public class HelpBoxDecoratorAttribute : ACustomPropertyAttribute, System.IEquatable<HelpBoxDecoratorAttribute>
     {

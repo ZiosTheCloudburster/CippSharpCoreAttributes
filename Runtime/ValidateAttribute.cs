@@ -1,13 +1,14 @@
-﻿
+﻿#if UNITY_EDITOR
 using System.Reflection;
 using CippSharp.Core.Extensions;
 using UnityEditor;
 using UnityEngine;
+#endif
 
 namespace CippSharp.Core.Attributes
 {   
     /// <summary>
-    /// Purpose: calls the methods if EditorGUI.EndChangeCheck was called.
+    /// Purpose: redraws the property and calls the methods if EditorGUI.EndChangeCheck was called.
     ///
     /// Usage: use this to do checks or ensure that a property is correctly updated.
     /// If you'd like to print some messages or not.
@@ -15,7 +16,7 @@ namespace CippSharp.Core.Attributes
     public class ValidateAttribute : AValidatePropertyAttribute
     {
         /// <summary>
-        /// Method's return type must be of bool value
+        /// Method's return type can be of bool type
         /// 
         /// Method's may contains a parameter of same type as field. 
         /// </summary>
@@ -129,18 +130,25 @@ namespace CippSharp.Core.Attributes
 
             private void LogMessageFromAttribute(object context, ValidateAttribute validateAttribute)
             {
+                string message = validateAttribute.Message;
+                if (string.IsNullOrEmpty(message))
+                {
+                    return;
+                }
+                
                 string logName = StringUtils.LogName(context);
                 Object @object = context as UnityEngine.Object;
+                
                 switch (validateAttribute.MessageType)
                 {
                     case MessageType.Info:
-                        Debug.Log(logName + validateAttribute.Message, @object);
+                        Debug.Log(logName + message, @object);
                         break;
                     case MessageType.Warning:
-                        Debug.LogWarning(logName + validateAttribute.Message, @object);
+                        Debug.LogWarning(logName + message, @object);
                         break;
                     case MessageType.Error:
-                        Debug.LogError(logName + validateAttribute.Message, @object);
+                        Debug.LogError(logName + message, @object);
                         break;
                 }
             }

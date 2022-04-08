@@ -20,21 +20,6 @@ namespace CippSharp.Core.Attributes
             HelpBoxOnly = 2,
         }
         
-        public enum MessageType : sbyte
-        {
-#if UNITY_EDITOR
-            None = UnityEditor.MessageType.None,
-            Info = UnityEditor.MessageType.Info,
-            Warning = UnityEditor.MessageType.Warning,
-            Error = UnityEditor.MessageType.Error,
-#else
-            None,
-            Info,
-            Warning,
-            Error,
-#endif
-        }
-        
         public bool IsReflectedMessage { get; protected set; } = false;
         public string Message { get; protected set; } = string.Empty;
         public ShowOptions Show { get; protected set; } = ShowOptions.After;
