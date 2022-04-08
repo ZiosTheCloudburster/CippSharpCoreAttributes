@@ -4,7 +4,7 @@
 
 using System;
 
-namespace CippSharp.Core.Extensions
+namespace CippSharp.Core.Attributes.Extensions
 {
 	public static class EnumExtensions
 	{

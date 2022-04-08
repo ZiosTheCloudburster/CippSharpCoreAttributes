@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CippSharp.Core.Extensions
+namespace CippSharp.Core.Attributes.Extensions
 {
     public static class StringExtensions
     {

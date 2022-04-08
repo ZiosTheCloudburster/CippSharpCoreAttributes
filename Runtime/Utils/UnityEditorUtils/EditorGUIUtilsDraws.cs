@@ -1,7 +1,7 @@
 ﻿#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
-using CippSharp.Core.Extensions;
+using CippSharp.Core.Attributes.Extensions;
 using UnityEditor;
 using UnityEngine;
 

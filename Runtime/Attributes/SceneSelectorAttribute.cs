@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using CippSharp.Core;
-using CippSharp.Core.Extensions;
+using CippSharp.Core.Attributes.Extensions;
 using UnityEditor;
 using UnityEditor.Callbacks;
 #endif

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CippSharp.Core.Extensions;
+using CippSharp.Core.Attributes.Extensions;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;

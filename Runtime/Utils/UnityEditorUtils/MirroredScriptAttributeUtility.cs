@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using CippSharp.Core.Extensions;
+using CippSharp.Core.Attributes.Extensions;
 using UnityEditor;
 using UnityEngine;
 

@@ -1,6 +1,6 @@
 ﻿#if UNITY_EDITOR
 using System.Reflection;
-using CippSharp.Core.Extensions;
+using CippSharp.Core.Attributes.Extensions;
 using UnityEditor;
 using UnityEngine;
 #endif

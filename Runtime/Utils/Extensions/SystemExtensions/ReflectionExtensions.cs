@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace CippSharp.Core.Extensions
+namespace CippSharp.Core.Attributes.Extensions
 {
     public static class ReflectionExtensions
     {
