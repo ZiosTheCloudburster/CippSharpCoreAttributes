@@ -26,17 +26,6 @@ namespace CippSharp.Core.Attributes
         /// <param name="style"></param>
         public static void DrawButton(Rect position, string name, GUIStyle style = null)
         {
-            DrawButton(ref position, ref name);
-        }
-
-        /// <summary>
-        /// Ref draws a button
-        /// </summary>
-        /// <param name="position"></param>
-        /// <param name="name"></param>
-        /// <param name="style"></param>
-        public static void DrawButton(ref Rect position, ref string name, GUIStyle style = null)
-        {
             if (style == null)
             {
                 if (GUI.Button(position, name))
@@ -269,22 +258,22 @@ namespace CippSharp.Core.Attributes
         
         #region Draw Labels
         
-        /// <summary>
-        /// Draw a label with the passed text
-        /// </summary>
-        /// <param name="rect"></param>
-        /// <param name="text">doesn't draw if text is null or empty</param>
-        public static void DrawHeader(Rect rect, string text)
-        {
-            DrawHeader(ref rect, ref text);
-        }
+//        /// <summary>
+//        /// Draw a label with the passed text
+//        /// </summary>
+//        /// <param name="rect"></param>
+//        /// <param name="text">doesn't draw if text is null or empty</param>
+//        public static void DrawHeader(Rect rect, string text)
+//        {
+//            DrawHeader(ref rect, ref text);
+//        }
 
         /// <summary>
         /// Draw a label with the passed text
         /// </summary>
         /// <param name="rect"></param>
         /// <param name="text">doesn't draw if text is null or empty</param>
-        public static void DrawHeader(ref Rect rect, ref string text)
+        public static void DrawHeader(Rect rect, string text)
         {
             if (!string.IsNullOrEmpty(text))
             {

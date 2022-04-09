@@ -22,18 +22,18 @@ namespace CippSharp.Core.Attributes
             }
         }
         
-        /// <summary>
-        /// It draws the property only if it is different from null.
-        /// </summary>
-        /// <param name="rect"></param>
-        /// <param name="property"></param>
-        public static void DrawProperty(ref Rect rect, SerializedProperty property)
-        {
-            if (property != null)
-            {
-                EditorGUI.PropertyField(rect, property, property.isExpanded && property.hasChildren);
-            }
-        }
+//        /// <summary>
+//        /// It draws the property only if it is different from null.
+//        /// </summary>
+//        /// <param name="rect"></param>
+//        /// <param name="property"></param>
+//        public static void DrawProperty(ref Rect rect, SerializedProperty property)
+//        {
+//            if (property != null)
+//            {
+//                EditorGUI.PropertyField(rect, property, property.isExpanded && property.hasChildren);
+//            }
+//        }
         
         /// <summary>
         /// It draws the property only if its different from null.
@@ -49,19 +49,19 @@ namespace CippSharp.Core.Attributes
             }
         }
         
-        /// <summary>
-        /// It draws the property only if its different from null.
-        /// </summary>
-        /// <param name="rect"></param>
-        /// <param name="property"></param>
-        /// <param name="label"></param>
-        public static void DrawProperty(ref Rect rect, SerializedProperty property, GUIContent label)
-        { 
-            if (property != null)
-            {
-                EditorGUI.PropertyField(rect, property, label, property.isExpanded && property.hasChildren);
-            }
-        }
+//        /// <summary>
+//        /// It draws the property only if its different from null.
+//        /// </summary>
+//        /// <param name="rect"></param>
+//        /// <param name="property"></param>
+//        /// <param name="label"></param>
+//        public static void DrawProperty(ref Rect rect, SerializedProperty property, GUIContent label)
+//        { 
+//            if (property != null)
+//            {
+//                EditorGUI.PropertyField(rect, property, label, property.isExpanded && property.hasChildren);
+//            }
+//        }
         
         #endregion
         
@@ -106,46 +106,46 @@ namespace CippSharp.Core.Attributes
         
         #endregion
 
-        #region Draw Default Property
+//        #region Draw Default Property
 
 //        public static bool DrawPropertyFieldInternal(Rect position, SerializedProperty property, GUIContent label)
 //        {
 //
 //        }
 
-        /// <summary>
-        /// Draw single line default property field (yes single line even if it has children)
-        /// </summary>
-        /// <param name="position"></param>
-        /// <param name="property"></param>
-        /// <param name="label"></param>
-        /// <returns></returns>
-        public static bool DrawDefaultSingleLinePropertyField(Rect position, SerializedProperty property, GUIContent label)
-        {
-            return (bool)DefaultPropertyFieldMethodInfo.Invoke(null, new object[] {position, property, label});
-        }
+//        /// <summary>
+//        /// Draw single line default property field (yes single line even if it has children)
+//        /// </summary>
+//        /// <param name="position"></param>
+//        /// <param name="property"></param>
+//        /// <param name="label"></param>
+//        /// <returns></returns>
+//        public static bool DrawDefaultSingleLinePropertyField(Rect position, SerializedProperty property, GUIContent label)
+//        {
+//            return (bool)DefaultPropertyFieldMethodInfo.Invoke(null, new object[] {position, property, label});
+//        }
 
         
-        /// <summary>
-        /// Draw single line not editable default property field (yes single line even if it has children)
-        /// </summary>
-        /// <param name="position"></param>
-        /// <param name="property"></param>
-        /// <param name="label"></param>
-        /// <returns></returns>
-        public static bool DrawNotEditableDefaultSingleLinePropertyField(Rect position, SerializedProperty property, GUIContent label)
-        {
-            bool enabled =  GUI.enabled; 
-            GUI.enabled = false;
-            
-            bool b = (bool) DefaultPropertyFieldMethodInfo.Invoke(null, new object[] {position, property, label});
-            
-            GUI.enabled = enabled;
-            
-            return b;
-        }
-
-        #endregion
+//        /// <summary>
+//        /// Draw single line not editable default property field (yes single line even if it has children)
+//        /// </summary>
+//        /// <param name="position"></param>
+//        /// <param name="property"></param>
+//        /// <param name="label"></param>
+//        /// <returns></returns>
+//        public static bool DrawNotEditableDefaultSingleLinePropertyField(Rect position, SerializedProperty property, GUIContent label)
+//        {
+//            bool enabled =  GUI.enabled; 
+//            GUI.enabled = false;
+//            
+//            bool b = (bool) DefaultPropertyFieldMethodInfo.Invoke(null, new object[] {position, property, label});
+//            
+//            GUI.enabled = enabled;
+//            
+//            return b;
+//        }
+//
+//        #endregion
 
         #region Get Property Height
 
@@ -172,169 +172,169 @@ namespace CippSharp.Core.Attributes
 
         #endregion
         
-        #region Draw Property (with delegates / iterators)
-
-        /// <summary>
-        /// Draws a standard generic property from a delegate
-        /// </summary>
-        /// <param name="position"></param>
-        /// <param name="property"></param>
-        /// <param name="drawSerializedPropertyDelegate"></param>
-        /// <returns></returns>
-        public static void DrawPropertyWithFoldout(Rect position, SerializedProperty property, DrawSerializedPropertyDelegate1 drawSerializedPropertyDelegate)
-        {
-            DrawFoldout(ref position, property);
-
-            if (property.isExpanded)
-            {
-                EditorGUI.indentLevel++;
-
-                drawSerializedPropertyDelegate.Invoke(ref position, property);
-
-                EditorGUI.indentLevel--;
-            }
-        }
+//        #region Draw Property (with delegates / iterators)
+//
+//        /// <summary>
+//        /// Draws a standard generic property from a delegate
+//        /// </summary>
+//        /// <param name="position"></param>
+//        /// <param name="property"></param>
+//        /// <param name="drawSerializedPropertyDelegate"></param>
+//        /// <returns></returns>
+//        public static void DrawPropertyWithFoldout(Rect position, SerializedProperty property, DrawSerializedPropertyDelegate1 drawSerializedPropertyDelegate)
+//        {
+//            DrawFoldout(ref position, property);
+//
+//            if (property.isExpanded)
+//            {
+//                EditorGUI.indentLevel++;
+//
+//                drawSerializedPropertyDelegate.Invoke(ref position, property);
+//
+//                EditorGUI.indentLevel--;
+//            }
+//        }
+//        
+//        /// <summary>
+//        /// Draw by iterator
+//        /// </summary>
+//        /// <param name="position"></param>
+//        /// <param name="property"></param>
+//        public static void DrawPropertyIterator(Rect position, SerializedProperty property)
+//        {
+//            DrawFoldout(ref position, property);
+//            if (property.isExpanded)
+//            {
+//                EditorGUI.indentLevel++;
+//
+//                IEnumerator iterator = property.GetEnumerator();
+//                while (iterator.MoveNext())
+//                {
+//                    SerializedProperty element = (SerializedProperty) iterator.Current;
+//                    position.height = GetPropertyHeight(element);
+//                    DrawProperty(ref position, element);
+//                    position.y += VerticalSpacing + position.height;
+//                }
+//
+//                EditorGUI.indentLevel--;
+//            }
+//        }
+//
+//        /// <summary>
+//        /// Draw not editable property with children with an iterator
+//        /// </summary>
+//        /// <param name="position"></param>
+//        /// <param name="property"></param>
+//        public static void DrawNotEditablePropertyWithChildren(Rect position, SerializedProperty property)
+//        {
+//            bool enabled =  GUI.enabled; 
+//            GUI.enabled = false;
+//            
+//            DrawFoldout(ref position, property);
+//            if (property.isExpanded && property.hasChildren)
+//            {
+//                EditorGUI.indentLevel++;
+//                var children = SerializedPropertyUtils.GetChildren(property);
+//                foreach (var child in children)
+//                {
+//                    position.height = GetPropertyHeight(child);
+//                    DrawProperty(ref position, child);
+//                    position.y += VerticalSpacing + position.height;
+//                }
+//                EditorGUI.indentLevel--;
+//            }
+//            
+//            GUI.enabled = enabled;
+//        }
+//
+//        /// <summary>
+//        /// Draw Children with iterator
+//        /// </summary>
+//        /// <param name="position"></param>
+//        /// <param name="property"></param>
+//        public static void DrawPropertyWithChildren(Rect position, SerializedProperty property)
+//        {
+//            DrawFoldout(ref position, property);
+//            if (property.isExpanded && property.hasChildren)
+//            {
+//                EditorGUI.indentLevel++;
+//                var children = SerializedPropertyUtils.GetChildren(property);
+//                foreach (var child in children)
+//                {
+//                    position.height = GetPropertyHeight(child);
+//                    DrawProperty(ref position, child);
+//                    position.y += VerticalSpacing + position.height;
+//                }
+//                EditorGUI.indentLevel--;
+//            }
+//        }
+//
+//        /// <summary>
+//        /// Draw Children with iterator and delegate
+//        /// </summary>
+//        /// <param name="position"></param>
+//        /// <param name="property"></param>
+//        public static void DrawPropertyWithChildren(Rect position, SerializedProperty property, DrawSerializedPropertyDelegate1 drawPropertyDelegate)
+//        {
+//            DrawFoldout(ref position, property);
+//            if (property.isExpanded && property.hasChildren)
+//            {
+//                EditorGUI.indentLevel++;
+//                var children = SerializedPropertyUtils.GetChildren(property);
+//                foreach (var child in children)
+//                {
+//                    position.height = GetPropertyHeight(child);
+//                    drawPropertyDelegate.Invoke(ref position, child);
+//                    position.y += VerticalSpacing + position.height;
+//                }
+//                EditorGUI.indentLevel--;
+//            }
+//        }
+//
+//        #endregion
         
-        /// <summary>
-        /// Draw by iterator
-        /// </summary>
-        /// <param name="position"></param>
-        /// <param name="property"></param>
-        public static void DrawPropertyIterator(Rect position, SerializedProperty property)
-        {
-            DrawFoldout(ref position, property);
-            if (property.isExpanded)
-            {
-                EditorGUI.indentLevel++;
-
-                IEnumerator iterator = property.GetEnumerator();
-                while (iterator.MoveNext())
-                {
-                    SerializedProperty element = (SerializedProperty) iterator.Current;
-                    position.height = GetPropertyHeight(element);
-                    DrawProperty(ref position, element);
-                    position.y += VerticalSpacing + position.height;
-                }
-
-                EditorGUI.indentLevel--;
-            }
-        }
-
-        /// <summary>
-        /// Draw not editable property with children with an iterator
-        /// </summary>
-        /// <param name="position"></param>
-        /// <param name="property"></param>
-        public static void DrawNotEditablePropertyWithChildren(Rect position, SerializedProperty property)
-        {
-            bool enabled =  GUI.enabled; 
-            GUI.enabled = false;
-            
-            DrawFoldout(ref position, property);
-            if (property.isExpanded && property.hasChildren)
-            {
-                EditorGUI.indentLevel++;
-                var children = SerializedPropertyUtils.GetChildren(property);
-                foreach (var child in children)
-                {
-                    position.height = GetPropertyHeight(child);
-                    DrawProperty(ref position, child);
-                    position.y += VerticalSpacing + position.height;
-                }
-                EditorGUI.indentLevel--;
-            }
-            
-            GUI.enabled = enabled;
-        }
-
-        /// <summary>
-        /// Draw Children with iterator
-        /// </summary>
-        /// <param name="position"></param>
-        /// <param name="property"></param>
-        public static void DrawPropertyWithChildren(Rect position, SerializedProperty property)
-        {
-            DrawFoldout(ref position, property);
-            if (property.isExpanded && property.hasChildren)
-            {
-                EditorGUI.indentLevel++;
-                var children = SerializedPropertyUtils.GetChildren(property);
-                foreach (var child in children)
-                {
-                    position.height = GetPropertyHeight(child);
-                    DrawProperty(ref position, child);
-                    position.y += VerticalSpacing + position.height;
-                }
-                EditorGUI.indentLevel--;
-            }
-        }
-
-        /// <summary>
-        /// Draw Children with iterator and delegate
-        /// </summary>
-        /// <param name="position"></param>
-        /// <param name="property"></param>
-        public static void DrawPropertyWithChildren(Rect position, SerializedProperty property, DrawSerializedPropertyDelegate1 drawPropertyDelegate)
-        {
-            DrawFoldout(ref position, property);
-            if (property.isExpanded && property.hasChildren)
-            {
-                EditorGUI.indentLevel++;
-                var children = SerializedPropertyUtils.GetChildren(property);
-                foreach (var child in children)
-                {
-                    position.height = GetPropertyHeight(child);
-                    drawPropertyDelegate.Invoke(ref position, child);
-                    position.y += VerticalSpacing + position.height;
-                }
-                EditorGUI.indentLevel--;
-            }
-        }
-
-        #endregion
-        
-        #region Get Property Height (with delegates / iterators)
-        
-        /// <summary>
-        /// Calculate a standard generic property height with a delegate.
-        /// </summary>
-        /// <param name="property"></param>
-        /// <param name="getPropertyHeightDelegate"></param>
-        /// <returns></returns>
-        public static float GetPropertyHeight(SerializedProperty property, GetPropertyHeightDelegate getPropertyHeightDelegate)
-        {
-            float h = LineHeight;
-            if (property.isExpanded)
-            {
-                h += getPropertyHeightDelegate.Invoke(property);
-            }
-            return h;
-        }
-
-        /// <summary>
-        /// Get Height by iterator
-        /// </summary>
-        /// <param name="property"></param>
-        /// <returns></returns>
-        public static float GetPropertyHeightIterator(SerializedProperty property)
-        {
-            float h = LineHeight;
-
-            if (property.isExpanded)
-            {
-                IEnumerator iterator = property.GetEnumerator();
-                while (iterator.MoveNext())
-                {
-                    SerializedProperty element = (SerializedProperty) iterator.Current;
-                    h += GetPropertyHeight(element);
-                    h += VerticalSpacing;
-                }
-            }
-
-            return h;
-        }
-        
-        #endregion
+//        #region Get Property Height (with delegates / iterators)
+//        
+//        /// <summary>
+//        /// Calculate a standard generic property height with a delegate.
+//        /// </summary>
+//        /// <param name="property"></param>
+//        /// <param name="getPropertyHeightDelegate"></param>
+//        /// <returns></returns>
+//        public static float GetPropertyHeight(SerializedProperty property, GetPropertyHeightDelegate getPropertyHeightDelegate)
+//        {
+//            float h = LineHeight;
+//            if (property.isExpanded)
+//            {
+//                h += getPropertyHeightDelegate.Invoke(property);
+//            }
+//            return h;
+//        }
+//
+//        /// <summary>
+//        /// Get Height by iterator
+//        /// </summary>
+//        /// <param name="property"></param>
+//        /// <returns></returns>
+//        public static float GetPropertyHeightIterator(SerializedProperty property)
+//        {
+//            float h = LineHeight;
+//
+//            if (property.isExpanded)
+//            {
+//                IEnumerator iterator = property.GetEnumerator();
+//                while (iterator.MoveNext())
+//                {
+//                    SerializedProperty element = (SerializedProperty) iterator.Current;
+//                    h += GetPropertyHeight(element);
+//                    h += VerticalSpacing;
+//                }
+//            }
+//
+//            return h;
+//        }
+//        
+//        #endregion
     }
 }
 #endif

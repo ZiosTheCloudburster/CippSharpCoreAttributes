@@ -21,19 +21,6 @@ namespace CippSharp.Core.Attributes
 		}
 		
 		/// <summary>
-		/// It draws the property only if its different from null.
-		/// </summary>
-		/// <param name="property"></param>
-		/// <param name="label"></param>
-		public static void DrawProperty(SerializedProperty property, GUIContent label)
-		{
-			if (property != null)
-			{
-				EditorGUILayout.PropertyField(property, label, property.isExpanded && property.hasChildren);
-			}
-		}
-	
-		/// <summary>
 		/// It draws the property only if its different from null in a not-editable way.
 		/// </summary>
 		/// <param name="property"></param>

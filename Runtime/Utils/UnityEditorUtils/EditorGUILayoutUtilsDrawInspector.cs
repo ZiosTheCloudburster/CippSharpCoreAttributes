@@ -8,11 +8,11 @@ namespace CippSharp.Core.Attributes
     {
         #region Draw Inspector
 
-        [Obsolete("2021/08/14 → Use DrawInspector instead. This will be removed in future versions.")]
-        public static bool DrawCascadeInspector(SerializedObject serializedObject, DrawSerializedPropertyDelegate drawPropertyDelegate)
-        {
-            return DrawInspector(serializedObject, drawPropertyDelegate);
-        }
+//        [Obsolete("2021/08/14 → Use DrawInspector instead. This will be removed in future versions.")]
+//        public static bool DrawCascadeInspector(SerializedObject serializedObject, DrawSerializedPropertyDelegate drawPropertyDelegate)
+//        {
+//            return DrawInspector(serializedObject, drawPropertyDelegate);
+//        }
 
         /// <summary>
         /// Foreach element (<see cref="SerializedProperty"/>) found in the <param name="serializedObject"></param> iterator,
