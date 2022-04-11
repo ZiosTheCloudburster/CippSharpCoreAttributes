@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace CippSharp.Core
+namespace CippSharp.Core.Attributes
 {
     /// <summary>
     /// For Iteration of an array of SerializedProperties

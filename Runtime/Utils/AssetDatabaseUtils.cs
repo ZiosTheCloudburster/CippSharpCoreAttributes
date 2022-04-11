@@ -9,7 +9,6 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
-using CippSharp.Core;
 using UnityEditor;
 #endif
 using Object = UnityEngine.Object;
@@ -92,53 +91,6 @@ namespace CippSharp.Core.Attributes
 #endif
         }
 
-        /// <summary>
-        /// Try to load an asset using editor way, but at runtime it fallback in resources.load.
-        /// </summary>
-        /// <param name="assetName"></param>
-        /// <param name="filter"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static T LoadTargetAsset<T>(string assetName, string filter) where T : Object
-        {
-#if UNITY_EDITOR
-            List<string> filteredPaths = new List<string>();
-            string[] guids = AssetDatabase.FindAssets(filter);
-            if (ArrayUtils.IsNullOrEmpty(guids))
-            {
-                Debug.LogWarning("No assets found.");
-                return null;
-            }
-
-            foreach (var guid in guids)
-            {
-                filteredPaths.Add(AssetDatabase.GUIDToAssetPath(guid));
-            }
-            
-            try
-            {
-                return AssetDatabase.LoadAssetAtPath<T>(filteredPaths.FirstOrDefault(f => Path.GetFileNameWithoutExtension(f) == assetName));
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e.Message);
-            }
-
-            try
-            {
-                return Resources.Load<T>(assetName);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e.Message);
-            }
-
-            return (T)null;
-#else
-            return Resources.Load<T>(assetName);
-#endif
-        }
-        
         #endregion
   
     }

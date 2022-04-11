@@ -20,11 +20,6 @@ namespace CippSharp.Core.Attributes
         public const string ErrorMessagePrefix = "Error ";
         
         /// <summary>
-        /// A better name for logs
-        /// </summary>
-        public static readonly string LogName = $"[{nameof(ReflectionUtils)}]: ";
-        
-        /// <summary>
         /// Create an instance of a type.
         /// </summary>
         /// <param name="type"></param>

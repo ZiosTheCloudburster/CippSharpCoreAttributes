@@ -1,16 +1,69 @@
 ﻿#if UNITY_EDITOR
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using Object = System.Object;
+using Object = UnityEngine.Object;
 
 namespace CippSharp.Core.Attributes
 {
-    public static partial class SerializedPropertyUtils
+    internal static class SerializedPropertyUtils
     {
+        public const string k_BackingField = "k__BackingField";
+        
+        private const string PropertyIsNullError = "Property is null.";
+        private const string PropertyIsNotArrayError = "Property isn't an array.";
+        
+        /// <summary>
+        /// It retrieves all serialized properties from <param name="serializedObject"></param> iterator.
+        /// </summary>
+        /// <param name="serializedObject"></param>
+        /// <returns></returns>
+        public static SerializedProperty[] GetAllProperties(SerializedObject serializedObject)
+        {
+            if (serializedObject == null)
+            {
+                Debug.LogError("Passed "+nameof(serializedObject)+" is null!");
+                return null;
+            }
+		    
+            List<SerializedProperty> properties = new List<SerializedProperty>();
+            SerializedProperty iterator = serializedObject.GetIterator();
+            for (bool enterChildren = true; iterator.NextVisible(enterChildren); enterChildren = false)
+            {
+                using (new EditorGUI.DisabledScope(Constants.ScriptSerializedPropertyName == iterator.propertyPath))
+                {
+                    properties.Add(iterator.Copy());
+                }
+            }
+            return properties.ToArray();
+        }
+        
+        
+        /// <summary>
+        /// Yes, even nested ones.
+        /// 
+        /// REMEMBER: if you want to save the reference to a property during the iteration you need to use <see cref="SerializedProperty.Copy"/>
+        /// method. It's unity flow, follow it!
+        /// </summary>
+        public static void IterateAllChildren(SerializedProperty property, SerializedPropertyAction @delegate)
+        {
+            IEnumerator childrenEnumerator = property.GetEnumerator();
+            while (childrenEnumerator.MoveNext())
+            {
+                SerializedProperty childProperty = childrenEnumerator.Current as SerializedProperty;
+                if (childProperty == null)
+                {
+                    continue;
+                }
+                
+                @delegate.Invoke(childProperty);
+            }
+        }
+        
         #region Get Parent Level
         
         /// <summary>
@@ -413,3 +466,4 @@ namespace CippSharp.Core.Attributes
     }
 }
 #endif
+
