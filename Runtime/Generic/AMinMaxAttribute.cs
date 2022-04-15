@@ -5,8 +5,8 @@
 //
 //=============================================================================
 
-#if UNITY_EDITOR
 using System;
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 #endif

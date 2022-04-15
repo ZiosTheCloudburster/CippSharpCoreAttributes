@@ -87,7 +87,7 @@ namespace CippSharp.Core.Attributes
 
             return null;
 #else
-            return Resources.Load<T>(assetName);
+            return Resources.Load<T>(filter);
 #endif
         }
 
