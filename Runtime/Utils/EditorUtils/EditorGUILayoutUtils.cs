@@ -2,15 +2,13 @@
 //
 // Author: Alessandro Salani (Cippo)
 //
-using System;
-using System.Reflection;
+
 using UnityEngine;
 using UnityEditor;
-using Object = UnityEngine.Object;
 
 namespace CippSharp.Core.Attributes
 {
-	public static partial class EditorGUILayoutUtils
+	internal static class EditorGUILayoutUtils
 	{
 		public const string inspectorModePropertyName = "inspectorMode";
 		public const string instanceIdLabelValue = "Instance ID";
