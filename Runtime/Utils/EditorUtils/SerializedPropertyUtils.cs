@@ -14,9 +14,6 @@ namespace CippSharp.Core.Attributes
     {
         public const string k_BackingField = "k__BackingField";
         
-        private const string PropertyIsNullError = "Property is null.";
-        private const string PropertyIsNotArrayError = "Property isn't an array.";
-        
         /// <summary>
         /// It retrieves all serialized properties from <param name="serializedObject"></param> iterator.
         /// </summary>

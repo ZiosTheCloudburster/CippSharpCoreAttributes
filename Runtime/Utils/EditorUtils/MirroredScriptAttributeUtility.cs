@@ -118,8 +118,8 @@ namespace CippSharp.Core.Attributes
             Type mType = MirroredType;
             if (mType == null)
             {
-                return null;}
-
+                return null;
+            }
             
             try
             {
