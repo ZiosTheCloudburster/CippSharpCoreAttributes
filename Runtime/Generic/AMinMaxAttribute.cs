@@ -16,8 +16,8 @@ namespace CippSharp.Core.Attributes
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
     public abstract class AMinMaxAttribute : ACustomPropertyAttribute
     {
-        public string firstPropertyName = Constants.x;
-        public string secondPropertyName = Constants.y;
+        public string firstPropertyName = AttributesConstants.x;
+        public string secondPropertyName = AttributesConstants.y;
 
         public float Min { get; protected set; } = 0.0f;
         public float Max { get; protected set; } = 1.0f;

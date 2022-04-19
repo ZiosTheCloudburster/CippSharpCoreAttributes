@@ -1,7 +1,7 @@
 ﻿
 namespace CippSharp.Core.Attributes
 {
-    internal static class Constants
+    internal static class AttributesConstants
     {
         /// <summary>
         /// Unity's default name for script property.
