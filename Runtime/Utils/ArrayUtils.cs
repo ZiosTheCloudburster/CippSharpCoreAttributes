@@ -84,57 +84,7 @@ namespace CippSharp.Core.Attributes
                 return false;
             }
         }
-        
-        #region For
-          
-        /// <summary>
-        /// Perform a for on an array
-        /// </summary>
-        /// <param name="array"></param>
-        /// <param name="action"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static void For<T>(ref T[] array, ForRefAction<T> action)
-        {
-            for (int i = 0; i < array.Length; i++)
-            {
-                action.Invoke(ref array[i], i);
-            }
-        }
-
-        /// <summary>
-        /// Perform a for on an list
-        /// </summary>
-        /// <param name="list"></param>
-        /// <param name="action"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static void For<T>(ref List<T> list, ForRefAction<T> action)
-        {
-            for (int i = 0; i < list.Count; i++)
-            {
-                T element = list[i];
-                action.Invoke(ref element, i);
-                list[i] = element;
-            }
-        }
-
-        /// <summary>
-        /// Perform a foreach
-        /// </summary>
-        /// <param name="enumerable"></param>
-        /// <param name="action"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static IEnumerable<T> For<T>(IEnumerable<T> enumerable, ForRefAction<T> action)
-        {
-            T[] array = enumerable.ToArray();
-            For(ref array, action);
-            return array;
-        }
-
-        #endregion
-        
+               
         #region Contains / Find
         
         /// <summary>
@@ -213,20 +163,6 @@ namespace CippSharp.Core.Attributes
             return -1;
         }
         
-        /// <summary>
-        /// Retrieve index if enumerable contains an element with given predicate.
-        /// Otherwise -1
-        /// </summary>
-        /// <param name="enumerable"></param>
-        /// <param name="predicate"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static int IndexOf<T>(IEnumerable<T> enumerable, Predicate<T> predicate)
-        {
-            T[] array = enumerable.ToArray();
-            return IndexOf(array, predicate);
-        }
-
         #endregion
 
         #region Is Null or Empty
@@ -265,44 +201,10 @@ namespace CippSharp.Core.Attributes
             return dictionary == null || dictionary.Count < 1;
         }
 
-        /// <summary>
-        /// Returns true if the given collection is null or empty
-        /// </summary>
-        /// <param name="collection"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static bool IsNullOrEmpty<T>(ICollection<T> collection)
-        {
-            return collection == null || collection.Count < 1;
-        }
-        
-        /// <summary>
-        /// Returns true if the given enumerable is null or empty
-        /// </summary>
-        /// <param name="enumerable"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static bool IsNullOrEmpty<T>(IEnumerable<T> enumerable)
-        {
-            return enumerable == null || !enumerable.Any();
-        }
-
         #endregion
 
         #region Is Valid Index
 
-        /// <summary>
-        /// Returns true if the given index is the array range.
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="array"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static bool IsValidIndex<T>(int index, T[] array)
-        {
-            return index >= 0 && index < array.Length;
-        }
-        
         /// <summary>
         /// Returns true if the given index is in the list range.
         /// </summary>
@@ -313,18 +215,6 @@ namespace CippSharp.Core.Attributes
         public static bool IsValidIndex<T>(int index, List<T> list)
         {
             return index >= 0 && index < list.Count;
-        }
-
-        /// <summary>
-        /// Returns true if the given index is in the list range.
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="enumerable"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static bool IsValidIndex<T>(int index, IEnumerable<T> enumerable)
-        {
-            return index >= 0 && index < enumerable.Count();
         }
         
         #endregion
@@ -345,39 +235,6 @@ namespace CippSharp.Core.Attributes
             return (from element in array where predicate.Invoke(element) select func.Invoke(element));
         }
         
-        /// <summary>
-        /// Select Many If predicate. Similar to System.linq Select but with a predicate to check.
-        /// </summary>
-        /// <param name="array"></param>
-        /// <param name="predicate"></param>
-        /// <param name="func"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="F"></typeparam>
-        /// <returns></returns>
-        public static IEnumerable<F> SelectManyIf<T, F>(IEnumerable<T> array, Predicate<T> predicate, Func<T, IEnumerable<F>> func)
-        {
-            List<F> fs = new List<F>();
-            foreach (var element in array)
-            {
-                if (predicate.Invoke(element))
-                {
-                    fs.AddRange(func.Invoke(element));
-                }
-            }
-            return fs;
-        }
-        
-        /// <summary>
-        /// Select not null elements from an enumerable
-        /// </summary>
-        /// <param name="enumerable"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static IEnumerable<T> SelectNotNullElements<T>(IEnumerable<T> enumerable) where T : class
-        {
-            return enumerable.Where(e => e != null);
-        }
-
         #endregion
         
         #region Sub Array
