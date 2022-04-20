@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace CippSharp.Core
+namespace CippSharp.Core.Attributes
 {
     internal static class StringUtils
     {

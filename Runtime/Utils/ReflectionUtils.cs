@@ -19,26 +19,6 @@ namespace CippSharp.Core.Attributes
 
         public const string ErrorMessagePrefix = "Error ";
         
-        /// <summary>
-        /// Create an instance of a type.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="instance"></param>
-        /// <param name="flags"></param>
-        /// <returns>success</returns>
-        public static bool CreateInstance(Type type, out object instance, BindingFlags flags = Common)
-        {
-            var constructor = type.GetConstructors(flags).FirstOrDefault(c => c.GetParameters().Length == 0);
-            if (constructor == null)
-            {
-                instance = null;
-                return false;
-            }
-
-            instance = constructor.Invoke(null);
-            return true;
-        }
-
         #region Find Type
         
         /// <summary>
@@ -290,7 +270,7 @@ namespace CippSharp.Core.Attributes
 
         #endregion
         
-         #region MethodInfo Methods
+        #region MethodInfo Methods
         
         /// <summary>
         /// Find a method via string
