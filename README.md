@@ -46,7 +46,7 @@ I was always charmed by the possibility of customization in UnityEditor with you
 Editors and drawers. I tried different plugins I also bought [Odin](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)
 but... they give a too and massive serialization to what I really need.
 KISS principle _keep it simple stupid_. So I decided and created my own library of attributes and decorators.
-If I a customization or something I do it my way. 
+If I need a customization or something I do it my way. 
 
 ### Links:
 - [repo](https://github.com/ZiosTheCloudburster/CippSharpCoreAttributes.git)
