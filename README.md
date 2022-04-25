@@ -1,6 +1,6 @@
 # CippSharpCoreAttributes
 Attributes and relative 'decorators' and 'drawers'.
-These are attributes intended to have CustomPropertyDrawersForInspector.
+These are attributes intended to have CustomPropertyDrawers for Inspector.
 
 ### Purpose: 
 A lighter solution than [Odin](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041) _(cough cough)_.
