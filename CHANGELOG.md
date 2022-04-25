@@ -2,6 +2,9 @@
 - minor changes and bug fixing
 - adding debugs for scripts
 
+## Version 1.0.1
+- updated readme, package and changelog
+
 ## Version 1.0.0
 - customization
 - support for packages
