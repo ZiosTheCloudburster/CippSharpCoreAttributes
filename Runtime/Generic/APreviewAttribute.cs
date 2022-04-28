@@ -112,7 +112,7 @@ namespace CippSharp.Core.Attributes
         /// <summary>
         /// Used by editor only
         /// </summary>
-        public bool isExpanded = true;
+        protected bool isExpanded = true;
 #endif
     }
 }

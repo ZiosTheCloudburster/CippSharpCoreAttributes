@@ -2,6 +2,9 @@
 - minor changes and bug fixing
 - adding debugs for scripts
 
+## Version 1.0.3
+- APreviewAttribute isExpanded is now protected
+
 ## Version 1.0.2
 - readme
 
