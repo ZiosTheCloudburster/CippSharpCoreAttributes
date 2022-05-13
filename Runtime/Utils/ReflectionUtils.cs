@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using UnityObject = UnityEngine.Object;
 
 namespace CippSharp.Core.Attributes
 {
@@ -17,6 +18,17 @@ namespace CippSharp.Core.Attributes
         /// </summary>
         public const BindingFlags Common = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy;
 
+        
+        /// <summary>
+        /// "Caught exception: " prefix
+        /// </summary>
+        private const string CaughtExceptionPrefix = "Caught exception: ";
+        
+        /// <summary>
+        /// A better name for logs
+        /// </summary>
+        private static readonly string LogName = $"[{nameof(ReflectionUtils)}]: ";
+        
         public const string ErrorMessagePrefix = "Error ";
         
         #region Find Type
@@ -326,7 +338,7 @@ namespace CippSharp.Core.Attributes
             }
             catch (Exception e)
             {
-                Debug.LogError(e.Message);
+                Debug.LogError(MessageGenericExceptionError(null, nameof(HasParametersCondition), e, out UnityObject o), o);         
                 return false;
             }
         }
@@ -353,8 +365,7 @@ namespace CippSharp.Core.Attributes
             }
             catch (Exception e)
             {
-                UnityEngine.Object obj = context as UnityEngine.Object;
-                Debug.LogError(e.Message, obj);
+                Debug.LogError(MessageGenericExceptionError(context, nameof(TryCallMethod), e, out UnityObject o), o);
             }
 
             result = null;
@@ -362,5 +373,12 @@ namespace CippSharp.Core.Attributes
         }
         
         #endregion
+        
+        private static string MessageGenericExceptionError(object context, string methodName, Exception e, out UnityObject o)
+        {
+            o = context as UnityObject;
+            string logName = o != null ? StringUtils.LogName(o) : LogName;
+            return logName + $"{methodName} failed. {CaughtExceptionPrefix}{e.Message}.";
+        }
     }
 }
