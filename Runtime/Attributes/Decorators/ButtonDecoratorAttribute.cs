@@ -134,7 +134,8 @@ namespace CippSharp.Core.Attributes
 
             return all;
         }
-        
+
+        #region Custom Editor
 #if UNITY_EDITOR
         [CustomPropertyDrawer(typeof(ButtonDecoratorAttribute), true)]
         public class ButtonDecoratorAttributeDrawer : DecoratorDrawer
@@ -215,5 +216,6 @@ namespace CippSharp.Core.Attributes
             }
         }
 #endif
+        #endregion
     }
 }
