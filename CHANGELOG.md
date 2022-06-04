@@ -2,6 +2,10 @@
 - minor changes and bug fixing
 - adding debugs for scripts
 
+## Version 1.0.4
+- improved debug logs
+- inserted a #region for a custom editor
+
 ## Version 1.0.3
 - APreviewAttribute isExpanded is now protected
 
