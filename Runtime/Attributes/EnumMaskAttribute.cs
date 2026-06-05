@@ -18,6 +18,13 @@ namespace CippSharp.Core.Attributes
     /// <summary>
     /// <see cref="BitMaskAttribute"/> but 'old school' (sometimes this is better).
     ///
+    /// Remember to implement a "None" at 0 in YourEnum
+    /// None = 0,
+    /// Some = 1
+    /// Other = 2
+    /// When = 4
+    /// AndSoOn = 8
+    /// 
     /// Jokes:
     /// - Enom Musk would approve this? -
     /// - I don't know! But check this: https://youtu.be/CwITXHnwMHo -
